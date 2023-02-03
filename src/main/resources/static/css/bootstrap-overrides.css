@@ -1,0 +1,34 @@
+
+
+/* Modifying Bootstrap containers */
+
+.container-xs {
+    max-width: 360px;
+}
+
+.container-sm {
+    max-width: 540px;
+}
+
+.container-md {
+    max-width: 720px;
+}
+
+.container-lg {
+    max-width: 720px;
+}
+
+.container-xl {
+    max-width: 1140px;
+}
+
+.container-xxl {
+    max-width: 1320px;
+}
+
+.btn {
+    border-width: 0.3rem;
+    border-radius: 1rem;
+    padding: 1rem 2rem;
+    text-align: center;
+}
