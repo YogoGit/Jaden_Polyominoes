@@ -1,0 +1,19 @@
+
+.login-wrapper{
+    max-width: 350px;
+    min-height: 500px;
+    margin: 7rem auto;
+}
+
+.login-header {
+    color: #fff;
+    text-align: center;
+}
+
+.login-body {
+    padding: 2.5rem 2rem 2rem 2rem;
+    background-color: #fff;
+    border-radius: 1rem;
+    width: 100%
+}
+

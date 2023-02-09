@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<div class="login-wrapper" th:fragment="login-form-template(form)">
+    <div class="login-header">
+        <h1 class="pb-3">Polyomominoes</h1>
+    </div>
+    <div class="login-body">
+        <div th:replace="${form}">
+        </div>
+    </div>
+</div>
+<div th:block th:replace="~{fragments/footer :: footer}"></div>
+</html>

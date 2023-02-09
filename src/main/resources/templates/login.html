@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header(~{::title},~{::link})}">
+    <title>Polyominoes - Log in</title>
+
+    <!-- Login CSS -->
+    <link rel="stylesheet" th:href="@{/css/login-form.css}"/>
+</head>
+<body class="bg-dark">
+<div th:replace="~{fragments/forms/login/login-form-template :: login-form-template(~{::form})}">
+    <form th:replace="~{fragments/forms/login/login-form :: login-form}"></form>
+</div>
+</body>
+</html>

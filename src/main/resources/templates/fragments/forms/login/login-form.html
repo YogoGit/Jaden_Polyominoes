@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<form th:fragment="login-form">
+    <h3 class="text-center">Welcome</h3>
+    <p class="text-center">Log in to your account</p>
+    <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" class="form-control" id="username" aria-describedby="username">
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" aria-describedby="password">
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Submit</button>
+</form>
+</html>
