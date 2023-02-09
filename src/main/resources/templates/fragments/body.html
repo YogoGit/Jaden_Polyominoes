@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+<body th:fragment="body(content)">
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <div class="wrapper">
+        <div th:replace="${content}"></div>
+    </div>
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

@@ -1,44 +1,8 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta name="author" content="Jaden Bathon 2023">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Login page</title>
-
-    <!-- Bootstrap 5 JS -->
-    <script th:src="@{/js/bootstrap.min.js}" crossorigin="anonymous"></script>
-
-    <!-- Bootstrap 5 CSS -->
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
-
-    <!-- Override Boostrap 5 CSS -->
-    <link rel="stylesheet" th:href="@{/css/bootstrap-overrides.css}"/>
-
-    <!-- Material Icons CSS -->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-
-    <!-- Open Sans CSS  -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
-
+<head th:replace="~{fragments/header :: header(~{::title},~{})}">
+    <title>Polyominoes</title>
 </head>
-<body>
-    <div class="vh-100 d-flex align-items-center justify-content-center">
-        <div class="container-md">
-            <div class="row mb-3"><h1 class="col-12 text-center">Polyominoes</h1></div>
-                <div class="container-sm">
-                    <div class="row mb-3"><div class="col-12"><button class="btn btn-lg btn-outline-primary w-100" disabled>Solo</button></div></div>
-                    <div class="row mb-3"><div class="col-12"><button class="btn btn-lg btn-outline-primary w-100" disabled>Brawl</button></div></div>
-                    <div class="row mb-3"><div class="col-12"><button class="btn btn-lg btn-primary w-100" >Guest</button></div></div>
-                    <div class="row mb-3">
-                        <div class="col-2"><button class="btn btn-lg btn-outline-primary w-100" disabled>?</button></div>
-                        <div class="col-10"><button class="btn btn-lg btn-outline-primary w-100" disabled>Settings</button></div>
-                    </div>
-                </div>
-            </div>
-            </div>
-    </div>
+<body th:replace="~{fragments/body :: body(~{})}">
 </body>
 </html>

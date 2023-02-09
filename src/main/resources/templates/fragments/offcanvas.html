@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"  aria-labelledby="offcanvasNavbar" th:fragment="offcanvas">
+    <div class="offcanvas-header">
+        <button class="btn-close-offcanvas" data-bs-dismiss="offcanvas" aria-label="Close">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
+        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Polyominoes</h5>
+    </div>
+    <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-center flex-grow-1">
+            <li class="nav-item">
+                <a class="nav-link" href="/">
+                    <span class="material-symbols-outlined">
+                        play_arrow
+                    </span>
+                    Play
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/leaderboard">
+                    <span class="material-symbols-outlined">
+                        leaderboard
+                    </span>
+                    Leaderboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/help">
+                    <span class="material-symbols-outlined">
+                        help
+                    </span>
+                    How to Play
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+</html>

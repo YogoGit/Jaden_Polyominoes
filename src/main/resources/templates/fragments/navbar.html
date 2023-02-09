@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<nav class="navbar fixed-top bg-dark" th:fragment="navbar">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
+        <a class="navbar-brand justify-content-start" th:href="@{/}">Polyominoes</a>
+
+        <a class="justify-content-end" th:href="@{/login}">
+            <span class="material-symbols-outlined">
+                account_circle
+            </span>
+            <span>
+            Log in
+            </span>
+        </a>
+        <div th:replace="~{fragments/offcanvas :: offcanvas}"></div>
+    </div>
+</nav>
+</html>
