@@ -1,34 +1,36 @@
 
 
-/* Modifying Bootstrap containers */
-
-.container-xs {
-    max-width: 360px;
+/* Material design icon resizing*/
+.material-symbols-outlined {
+    vertical-align: center;
 }
 
-.container-sm {
-    max-width: 540px;
+span.md-1 {
+    font-size: 40px;
+    font-variation-settings: 'OPSZ' 40;
+}
+span.md-2 {
+    font-size: 32px;
+    font-variation-settings: 'OPSZ' 32;
+}
+span.md-3{
+    font-size: 28px;
+    font-variation-settings: 'OPSZ' 28;
+}
+span.md-4 {
+    font-size: 24px;
+    font-variation-settings: 'OPSZ' 24;
+}
+span.md-5 {
+    font-size: 20px;
+    font-variation-settings: 'OPSZ' 20;
+}
+span.md-6 {
+    font-size: 16px;
+    font-variation-settings: 'OPSZ' 16;
 }
 
-.container-md {
-    max-width: 720px;
-}
 
-.container-lg {
-    max-width: 720px;
-}
 
-.container-xl {
-    max-width: 1140px;
-}
 
-.container-xxl {
-    max-width: 1320px;
-}
 
-.btn {
-    border-width: 0.3rem;
-    border-radius: 1rem;
-    padding: 1rem 2rem;
-    text-align: center;
-}

@@ -2,14 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 
-<div class="login-wrapper" th:fragment="login-form-template(form)">
-    <div class="login-header">
-        <h1 class="pb-3">Polyomominoes</h1>
+<div class="login-wrapper" th:fragment="login-form-template(form,footer)">
+    <div class="login-header mb-3">
+        <h1>Polyomominoes</h1>
     </div>
-    <div class="login-body">
+    <div class="login-body mb-3">
         <div th:replace="${form}">
         </div>
     </div>
+    <div class="login-footer mb-3">
+        <div th:replace="${footer}"></div>
+    </div>
 </div>
-<div th:block th:replace="~{fragments/footer :: footer}"></div>
 </html>
