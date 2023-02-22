@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<form th:fragment="register-form">
+<form action="#" th:fragment="register-form" th:action="@{/register}" th:object="${registerForm}" method="post">
     <h3 class="text-center">Welcome</h3>
     <p class="text-center">Create your account</p>
-    <div class="mb-3">
+    <div class="form-floating mb-3">
+        <input type="text" th:field="*{username}" th:errorclass="is-invalid" class="form-control" id="username" aria-describedby="username" placeholder="Username">
         <label for="username" class="form-label">Username</label>
-        <input type="text" class="form-control" id="username" aria-describedby="username">
+        <div class="invalid-feedback"><i class="fas fa-exclamation-circle"></i> <span th:errors="*{username}">Username Error</span></div>
     </div>
-    <div class="mb-3">
+    <div class="form-floating mb-3">
+        <input type="email" th:field="*{email}" th:errorclass="is-invalid" class="form-control" id="email" aria-describedby="email" placeholder="Email">
         <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" aria-describedby="email">
+        <div class="invalid-feedback"><i class="fas fa-exclamation-circle"></i> <span th:errors="*{email}">Email Error</span></div>
     </div>
-    <div class="mb-3">
+    <div class="form-floating mb-3">
+        <input type="password" th:field="*{password}" th:errorclass="is-invalid" class="form-control" id="password" aria-describedby="password" placeholder="Password">
         <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" aria-describedby="password">
+        <div class="invalid-feedback"><i class="fas fa-exclamation-circle"></i> <span th:errors="*{password}"> Password Error</span></div>
     </div>
-    <div class="mb-3">
+    <div class="form-floating mb-3">
+        <input type="password" th:field="*{passwordConfirm}" th:errorclass="is-invalid" class="form-control" id="confirm-password" aria-describedby="confirmPassword" placeholder="Confirm Password">
         <label for="confirm-password" class="form-label">Confirm Password</label>
-        <input type="password" class="form-control" id="confirm-password" aria-describedby="confirmPassword">
+        <div class="invalid-feedback"><i class="fas fa-exclamation-circle"></i> <span th:errors="*{passwordConfirm}">Confirm Password Error</span></div>
     </div>
     <button type="submit" class="btn btn-primary w-100">Create Account</button>
 </form>

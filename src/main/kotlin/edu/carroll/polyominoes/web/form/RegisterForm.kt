@@ -1,0 +1,34 @@
+package edu.carroll.polyominoes.web.form
+
+import jakarta.validation.constraints.Email
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.Pattern
+import jakarta.validation.constraints.Size
+
+class RegisterForm() {
+
+    @field:NotBlank(message = "Enter an username")
+    @field:Pattern(regexp = "^[a-zA-Z0-9.]*\$", message = "Usernames can contain letters (a-z), numbers (0-9), and periods (.)")
+    @field:Size(min = 6, max = 64, message = "Password must be between 6 and 64 characters")
+    var username: String = ""
+
+    @field:NotBlank(message = "Enter an email")
+    @field:Email(message = "Enter a valid email")
+    var email: String = ""
+
+    @field:NotBlank(message = "Enter a password")
+    @field:Pattern(regexp = "^[a-zA-Z0-9!@#\$%^&*()_+={}\\[\\]|\\\\:;\"'<,>.?/-]*\$", message = "Pass can contain letters (a-z), numbers (0-9), and special characters (!@#\$%^&*()_+={}\\[\\]|\\\\:;\"'<,>.?/)")
+    @field:Size(min = 8, message = "Password must be between 8 and 128 characters")
+    var password: String = ""
+
+    @field:NotBlank(message = "Confirm your password")
+    var passwordConfirm: String = ""
+
+    constructor(username: String, email: String, password: String, passwordConfirm: String) : this() {
+        this.username = username
+        this.email = email
+        this.password = password
+        this.passwordConfirm = passwordConfirm
+    }
+
+}

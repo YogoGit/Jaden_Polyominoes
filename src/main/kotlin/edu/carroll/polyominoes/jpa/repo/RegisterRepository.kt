@@ -5,7 +5,7 @@ import kotlin.collections.List
 import edu.carroll.polyominoes.jpa.model.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-interface LoginRepository : JpaRepository<Account, Int> {
+interface RegisterRepository : JpaRepository<Account, Int> {
 
     fun findByUsernameIgnoreCase(username: String) : List<Account>
     fun findByEmailIgnoreCase(email: String) : List<Account>

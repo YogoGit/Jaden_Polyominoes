@@ -1,13 +1,12 @@
 package edu.carroll.polyominoes.service
 
-import edu.carroll.polyominoes.jpa.model.Login
+import edu.carroll.polyominoes.jpa.model.Account
 import edu.carroll.polyominoes.jpa.repo.LoginRepository
 import edu.carroll.polyominoes.web.form.LoginForm
 import org.springframework.stereotype.Service
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.bcrypt.BCrypt
 
 @Service
 class LoginServiceImpl(private val loginRepo: LoginRepository) : LoginService {
@@ -27,9 +26,9 @@ class LoginServiceImpl(private val loginRepo: LoginRepository) : LoginService {
         log.info("validateUser: user ${loginForm.username} attempted login");
 
         // Always do the lookup in a case-insensitive manner (lower-casing the data).
-        var usersByUsername : List<Login> = loginRepo.findByUsernameIgnoreCase(loginForm.username);
-        var usersByEmail : List<Login> = loginRepo.findByEmailIgnoreCase(loginForm.username);
-        var users : List<Login> = usersByUsername + usersByEmail
+        var usersByUsername : List<Account> = loginRepo.findByUsernameIgnoreCase(loginForm.username);
+        var usersByEmail : List<Account> = loginRepo.findByEmailIgnoreCase(loginForm.username);
+        var users : List<Account> = usersByUsername + usersByEmail
 
 
         // We expect 0 or 1, so if we get more than 1, bail out as this is an error we don't deal with properly.
@@ -38,11 +37,10 @@ class LoginServiceImpl(private val loginRepo: LoginRepository) : LoginService {
             return false
         }
 
-        val user : Login = users[0]
-        val passwordEncoder : PasswordEncoder = BCryptPasswordEncoder(16)
-        val userProvidedHash =  passwordEncoder.encode(loginForm.password)
+        val user : Account = users[0]
 
-        if (!user.hashPassword.equals(userProvidedHash)) {
+
+        if (!BCrypt.checkpw(loginForm.password,user.hashPassword)) {
             log.debug("validateUser: password !match");
             return false;
         }

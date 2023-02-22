@@ -8,25 +8,21 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "account")
-class Login() {
+class Account() {
     companion object {
         private val serialVersionUID: Long = 1L;
         private val EOL: String = System.lineSeparator()
         private val TAB: String = "\t"
     }
-
-    constructor(username: String, rawPassword: String) : this() {
+    constructor(username: String, email: String, hashPassword: String) : this() {
         this.username = username
-        setRawPassword(rawPassword)
-    }
-
-    private fun setRawPassword(rawPassword: String) {
-
+        this.email = email
+        this.hashPassword = hashPassword
     }
 
     @Id
     @GeneratedValue
-    var id: Int? = null
+    var id: Long? = null
 
     @Column(name = "username", nullable = false, unique = true)
     var username: String? = null
@@ -49,7 +45,7 @@ class Login() {
         if (o == null || o::class != this::class) {
             return false;
         }
-        val login : Login = o as Login;
+        val login : Account = o as Account;
         return (username.equals(login.username) || email.equals(login.email)) && hashPassword.equals(login.hashPassword);
     }
 

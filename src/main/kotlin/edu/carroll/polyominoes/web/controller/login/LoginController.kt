@@ -22,13 +22,13 @@ class LoginController(private val loginService: LoginService) {
     }
 
     @PostMapping("/login")
-    fun loginPost(@Valid @ModelAttribute loginForm : LoginForm, result : BindingResult): String {
+    fun loginPost(@Valid @ModelAttribute loginForm : LoginForm, result : BindingResult): String? {
         if (result.hasErrors()) {
-            return "login";
+            return null
         }
         if (!loginService.validateUser(loginForm)) {
-            result.addError(ObjectError("globalError", "username, email, or password is incorrect"))
-            return "login"
+            result.addError(ObjectError("globalError", "Username, email, or password is incorrect"))
+            return null
         }
         return "redirect:/"
     }
