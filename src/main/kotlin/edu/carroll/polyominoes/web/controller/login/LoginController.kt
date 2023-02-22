@@ -1,16 +1,19 @@
 package edu.carroll.polyominoes.web.controller.login
 
+import edu.carroll.polyominoes.service.LoginService
 import edu.carroll.polyominoes.web.form.LoginForm
 import jakarta.validation.Valid
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
+import org.springframework.validation.ObjectError
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PostMapping
 
+
 @Controller
-class LoginController {
+class LoginController(private val loginService: LoginService) {
 
     @GetMapping("/login")
     fun loginGet(model: Model): String {
@@ -22,6 +25,10 @@ class LoginController {
     fun loginPost(@Valid @ModelAttribute loginForm : LoginForm, result : BindingResult): String {
         if (result.hasErrors()) {
             return "login";
+        }
+        if (!loginService.validateUser(loginForm)) {
+            result.addError(ObjectError("globalError", "username, email, or password is incorrect"))
+            return "login"
         }
         return "redirect:/"
     }

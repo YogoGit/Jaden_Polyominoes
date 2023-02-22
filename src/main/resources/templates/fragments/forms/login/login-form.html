@@ -5,7 +5,7 @@
     <p class="text-center">Log in to your account</p>
     <div class="form-floating mb-3">
         <input type="text" th:field="*{username}" th:errorclass="is-invalid" class="form-control" id="username" aria-describedby="username" placeholder="Username or Email">
-        <label for="username">Username</label>
+        <label for="username">Username or Email</label>
         <div class="invalid-feedback"><i class="fas fa-exclamation-circle"></i> Enter a Username or Email</div>
     </div>
     <div class="form-floating mb-3">
@@ -14,6 +14,7 @@
         <div class="invalid-feedback"><i class="fas fa-exclamation-circle"></i> Enter a Password</div>
     </div>
     <a class="d-inline-block mb-3" href="/reset-password">Forgot Password?</a>
+    <div class="mb-3 text-danger" th:if="${#fields.hasGlobalErrors()}"><i class="fas fa-exclamation-circle"></i> username/email or password is incorrect</div>
     <button type="submit" class="btn btn-primary w-100">Submit</button>
 </form>
 </html>

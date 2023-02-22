@@ -30,7 +30,11 @@ span.md-6 {
     font-variation-settings: 'OPSZ' 16;
 }
 
-
+/* Remove Bootstrap invalid icon */
+/* SASS $enable-validation-icons: false; */
+.form-control.is-invalid{
+    background-image: none;
+}
 
 
 
