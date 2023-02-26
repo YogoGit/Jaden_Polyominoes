@@ -23,30 +23,41 @@ class LoginServiceImpl(private val loginRepo: LoginRepository) : LoginService {
      * @return true if data exists and matches what's on record, false otherwise
      */
     override fun validateUser(loginForm: LoginForm): Boolean {
-        log.info("validateUser: user ${loginForm.username} attempted login");
+        log.debug("validateUser: user '{}' attempted login", loginForm.username)
 
-        // Always do the lookup in a case-insensitive manner (lower-casing the data).
-        var usersByUsername : List<Account> = loginRepo.findByUsernameIgnoreCase(loginForm.username);
-        var usersByEmail : List<Account> = loginRepo.findByEmailIgnoreCase(loginForm.username);
-        var users : List<Account> = usersByUsername + usersByEmail
+        var users = emptyList<Account>()
+        // Checking if the user inputted an email address or username.
+        if (loginForm.username.contains("@")) {
+            log.debug("vaildUser: username contained '@' looking up '{}' by email", loginForm.username)
+            // Always do the lookup in a case-insensitive manner (lower-casing the data).
+            users = loginRepo.findByEmailIgnoreCase(loginForm.username)
+        } else {
+            log.debug("vaildUser: username was not an email looking up '{}' by username", loginForm.username)
+            // Always do the lookup in a case-insensitive manner (lower-casing the data).
+            users = loginRepo.findByEmailIgnoreCase(loginForm.username)
+        }
 
 
         // We expect 0 or 1, so if we get more than 1, bail out as this is an error we don't deal with properly.
         if (users.size != 1) {
-            log.debug("validateUser: found ${users.size} users");
+            if(users.size > 1) {
+                log.warn("validateUser: found {} users for '{}'",users.size,loginForm.username)
+            } else {
+                log.debug("validateUser: found no users for {}", loginForm.username)
+            }
             return false
         }
 
-        val user : Account = users[0]
+        val user = users[0]
 
 
         if (!BCrypt.checkpw(loginForm.password,user.hashPassword)) {
-            log.debug("validateUser: password !match");
+            log.debug("validateUser: password !match")
             return false;
         }
 
         // User exists, and the provided password matches the hashed password in the database.
-        log.debug("validateUser: successful login");
+        log.info("validateUser: successful login for '{}'", loginForm.username)
         return true
 
     }
