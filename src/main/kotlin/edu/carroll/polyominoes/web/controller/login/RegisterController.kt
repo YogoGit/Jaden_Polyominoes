@@ -1,9 +1,10 @@
 package edu.carroll.polyominoes.web.controller.login
 
-import edu.carroll.polyominoes.service.RegisterService
-import edu.carroll.polyominoes.web.form.LoginForm
+import edu.carroll.polyominoes.service.login.RegisterService
+import edu.carroll.polyominoes.service.login.RegisterServiceImpl
 import edu.carroll.polyominoes.web.form.RegisterForm
 import jakarta.validation.Valid
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
@@ -14,6 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping
 
 @Controller
 class RegisterController(private val registerService: RegisterService) {
+
+    companion object {
+        private val log  = LoggerFactory.getLogger(RegisterController::class.java)
+    }
 
     @GetMapping("/register")
     fun loginGet(model: Model): String {
@@ -36,7 +41,7 @@ class RegisterController(private val registerService: RegisterService) {
             result.addError(ObjectError("email", "Email is taken"))
             errorOccured = true;
         }
-        if (!registerService.validateConfirmPassword(registerForm)) {
+        if (!validateConfirmPassword(registerForm)) {
             result.addError(ObjectError("password", "Passwords do not match"))
             errorOccured = true;
         }
@@ -49,7 +54,23 @@ class RegisterController(private val registerService: RegisterService) {
             return null;
         }
 
-        return "redirect:/";
+        return "redirect:/login";
+    }
+
+    /**
+     * Given a registerForm, determine if the password provided match.
+     *
+     * @param registerForm - Data containing user Register information, such as username, email, and password.
+     * @return true if the passwords match, false otherwise
+     */
+    private fun validateConfirmPassword(registerForm : RegisterForm) : Boolean {
+        if(registerForm.password != registerForm.passwordConfirm) {
+            log.debug("validateConfirmPassword: passwords !match");
+            return false
+        }
+
+        log.debug("validateConfirmPassword: passwords match");
+        return true
     }
 
 }

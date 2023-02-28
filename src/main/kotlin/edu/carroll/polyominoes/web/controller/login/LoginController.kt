@@ -1,6 +1,6 @@
 package edu.carroll.polyominoes.web.controller.login
 
-import edu.carroll.polyominoes.service.LoginService
+import edu.carroll.polyominoes.service.login.LoginService
 import edu.carroll.polyominoes.web.form.LoginForm
 import jakarta.validation.Valid
 import org.springframework.stereotype.Controller
@@ -23,6 +23,7 @@ class LoginController(private val loginService: LoginService) {
 
     @PostMapping("/login")
     fun loginPost(@Valid @ModelAttribute loginForm : LoginForm, result : BindingResult): String? {
+
         if (result.hasErrors()) {
             return null
         }
@@ -32,7 +33,6 @@ class LoginController(private val loginService: LoginService) {
         }
         return "redirect:/"
     }
-
 
 
 }

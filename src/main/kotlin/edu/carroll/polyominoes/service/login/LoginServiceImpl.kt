@@ -1,10 +1,9 @@
-package edu.carroll.polyominoes.service
+package edu.carroll.polyominoes.service.login
 
 import edu.carroll.polyominoes.jpa.model.Account
 import edu.carroll.polyominoes.jpa.repo.LoginRepository
 import edu.carroll.polyominoes.web.form.LoginForm
 import org.springframework.stereotype.Service
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCrypt
 
@@ -12,7 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt
 class LoginServiceImpl(private val loginRepo: LoginRepository) : LoginService {
 
     companion object {
-        private val log : Logger = LoggerFactory.getLogger(LoginServiceImpl::class.java)
+        private val log = LoggerFactory.getLogger(LoginServiceImpl::class.java)
     }
 
 
@@ -25,23 +24,23 @@ class LoginServiceImpl(private val loginRepo: LoginRepository) : LoginService {
     override fun validateUser(loginForm: LoginForm): Boolean {
         log.debug("validateUser: user '{}' attempted login", loginForm.username)
 
-        var users = emptyList<Account>()
+        lateinit var users : List<Account>
         // Checking if the user inputted an email address or username.
         if (loginForm.username.contains("@")) {
-            log.debug("vaildUser: username contained '@' looking up '{}' by email", loginForm.username)
+            log.debug("validateUser: username contained '@' looking up '{}' by email", loginForm.username)
             // Always do the lookup in a case-insensitive manner (lower-casing the data).
             users = loginRepo.findByEmailIgnoreCase(loginForm.username)
         } else {
-            log.debug("vaildUser: username was not an email looking up '{}' by username", loginForm.username)
+            log.debug("validateUser: username was not an email looking up '{}' by username", loginForm.username)
             // Always do the lookup in a case-insensitive manner (lower-casing the data).
-            users = loginRepo.findByEmailIgnoreCase(loginForm.username)
+            users = loginRepo.findByUsernameIgnoreCase(loginForm.username)
         }
 
 
         // We expect 0 or 1, so if we get more than 1, bail out as this is an error we don't deal with properly.
         if (users.size != 1) {
             if(users.size > 1) {
-                log.warn("validateUser: found {} users for '{}'",users.size,loginForm.username)
+                log.warn("validateUser: found {} users for '{}'", users.size, loginForm.username)
             } else {
                 log.debug("validateUser: found no users for {}", loginForm.username)
             }
@@ -61,6 +60,4 @@ class LoginServiceImpl(private val loginRepo: LoginRepository) : LoginService {
         return true
 
     }
-
-
 }

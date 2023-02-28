@@ -1,4 +1,4 @@
-package edu.carroll.polyominoes.service
+package edu.carroll.polyominoes.service.login
 
 import edu.carroll.polyominoes.web.form.LoginForm
 
