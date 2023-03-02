@@ -25,13 +25,13 @@ class Account() {
     var id: Long? = null
 
     @Column(name = "username", nullable = false, unique = true)
-    var username: String? = null
+    var username: String = ""
 
     @Column(name = "email", nullable = false, unique = true)
-    var email: String?= null
+    var email: String = ""
 
     @Column(name = "password", nullable = false)
-    var hashPassword: String? = null
+    var hashPassword: String = ""
 
     override fun toString() : String {
         return "Login @ ${super.toString()} [ $EOL" +
