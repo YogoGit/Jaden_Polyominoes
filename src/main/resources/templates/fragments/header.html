@@ -2,20 +2,20 @@
 <html lang="en">
 <head th:fragment="header(title,links)">
 
-    <meta name="author" content="Jaden Bathon 2023">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta content="Jaden Bathon 2023" name="author">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 
     <title th:replace="${title}">Polyominoes</title>
 
     <!-- Bootstrap 5.3 JS -->
-    <script th:src="@{vendor/bootstrap/js/bootstrap.min.js}" crossorigin="anonymous"></script>
+    <script crossorigin="anonymous" th:src="@{vendor/bootstrap/js/bootstrap.min.js}"></script>
 
     <!-- Bootstrap 5.3 CSS -->
     <link rel="stylesheet" th:href="@{vendor/bootstrap/css/bootstrap.min.css}"/>
 
     <!-- Fontawesome 5.15 JS -->
-    <script th:src="@{vendor/fontawesome/js/all.min.js}" crossorigin="anonymous"></script>
+    <script crossorigin="anonymous" th:src="@{vendor/fontawesome/js/all.min.js}"></script>
 
     <!-- Fontawesome 5.15 CSS -->
     <link rel="stylesheet" th:href="@{vendor/fontawesome/css/all.min.css}"/>
@@ -24,7 +24,7 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap-overrides.css}"/>
 
     <!-- Addition Links -->
-    <th:block th:replace="${links}" />
+    <th:block th:replace="${links}"/>
 
 </head>
 </html>

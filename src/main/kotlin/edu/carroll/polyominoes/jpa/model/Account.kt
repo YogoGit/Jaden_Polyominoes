@@ -1,10 +1,6 @@
 package edu.carroll.polyominoes.jpa.model
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*
 
 @Entity
 @Table(name = "account")
@@ -14,6 +10,7 @@ class Account() {
         private val EOL: String = System.lineSeparator()
         private val TAB: String = "\t"
     }
+
     constructor(username: String, email: String, hashPassword: String) : this() {
         this.username = username
         this.email = email
@@ -33,7 +30,7 @@ class Account() {
     @Column(name = "password", nullable = false)
     var hashPassword: String = ""
 
-    override fun toString() : String {
+    override fun toString(): String {
         return "Login @ ${super.toString()} [ $EOL" +
                 "$TAB username=$username $EOL" +
                 "$TAB hashPassword=**** $EOL" +
@@ -45,10 +42,9 @@ class Account() {
         if (o == null || o::class != this::class) {
             return false;
         }
-        val login : Account = o as Account;
+        val login: Account = o as Account;
         return (username.equals(login.username) || email.equals(login.email)) && hashPassword.equals(login.hashPassword);
     }
-
 
 
 }

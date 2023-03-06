@@ -8,5 +8,5 @@ import org.springframework.boot.runApplication
 class PolyominoesApplication
 
 fun main(args: Array<String>) {
-	runApplication<PolyominoesApplication>(*args)
+    runApplication<PolyominoesApplication>(*args)
 }

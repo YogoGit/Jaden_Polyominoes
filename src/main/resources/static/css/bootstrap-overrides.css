@@ -1,5 +1,3 @@
-
-
 /* Material design icon resizing*/
 .material-symbols-outlined {
     vertical-align: center;
@@ -9,22 +7,27 @@ span.md-1 {
     font-size: 40px;
     font-variation-settings: 'OPSZ' 40;
 }
+
 span.md-2 {
     font-size: 32px;
     font-variation-settings: 'OPSZ' 32;
 }
-span.md-3{
+
+span.md-3 {
     font-size: 28px;
     font-variation-settings: 'OPSZ' 28;
 }
+
 span.md-4 {
     font-size: 24px;
     font-variation-settings: 'OPSZ' 24;
 }
+
 span.md-5 {
     font-size: 20px;
     font-variation-settings: 'OPSZ' 20;
 }
+
 span.md-6 {
     font-size: 16px;
     font-variation-settings: 'OPSZ' 16;
@@ -32,7 +35,7 @@ span.md-6 {
 
 /* Remove Bootstrap invalid icon */
 /* SASS $enable-validation-icons: false; */
-.form-control.is-invalid{
+.form-control.is-invalid {
     background-image: none;
 }
 

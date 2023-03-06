@@ -1,6 +1,5 @@
 package edu.carroll.polyominoes.service.login
 
-import edu.carroll.polyominoes.jpa.model.Account
 import edu.carroll.polyominoes.jpa.model.SecurityAccount
 import edu.carroll.polyominoes.jpa.repo.LoginRepository
 import org.slf4j.LoggerFactory
@@ -50,7 +49,7 @@ class UserDetailsServiceImpl(private val loginRepo: LoginRepository) : UserDetai
 
         // We expect 0 or 1, so if we get more than 1, bail out as this is an error we don't deal with properly.
         if (users.size != 1) {
-            if(users.size > 1) {
+            if (users.size > 1) {
                 log.warn("validateUser: found {} users for '{}'", users.size, username)
             } else {
                 log.debug("validateUser: found no users for {}", username)

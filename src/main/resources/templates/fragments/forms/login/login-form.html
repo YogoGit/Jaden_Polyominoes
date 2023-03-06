@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<form action="#" th:fragment="login-form" th:action="@{/login}" th:object="${loginForm}" method="post">
+<form action="#" method="post" th:action="@{/login}" th:fragment="login-form">
     <h3 class="text-center">Welcome</h3>
     <p class="text-center">Log in to your account</p>
     <div class="form-floating mb-3">
-        <input type="text" th:field="*{username}" th:errorclass="is-invalid" class="form-control" id="username" aria-describedby="username" placeholder="Username or Email" required>
+        <input aria-describedby="username" name="username" class="form-control" id="username" placeholder="Username or Email"
+               required type="text">
         <label for="username">Username or Email</label>
     </div>
     <div class="form-floating mb-3">
-        <input type="password" th:field="*{password}" th:errorclass="is-invalid" class="form-control" id="password" aria-describedby="password" placeholder="Password" required>
+        <input aria-describedby="password" name="password" class="form-control" id="password" placeholder="Password" required
+               type="password" autofocus="autofocus">
         <label for="password">Password</label>
     </div>
     <a class="d-inline-block mb-3" href="/reset-password">Forgot Password?</a>
-    <div class="mb-3 text-danger" th:if="${param.error != null}"><i class="fas fa-exclamation-circle"></i> Your login details were not found</div>
-    <button type="submit" class="btn btn-primary w-100">Submit</button>
+    <div class="mb-3 text-danger" th:if="${param.error != null}"><i class="fas fa-exclamation-circle"></i> Your login
+        details were not found
+    </div>
+    <button class="btn btn-primary w-100" type="submit">Submit</button>
 </form>
 </html>

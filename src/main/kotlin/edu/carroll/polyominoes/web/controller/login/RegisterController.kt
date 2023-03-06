@@ -1,11 +1,11 @@
 package edu.carroll.polyominoes.web.controller.login
 
 import edu.carroll.polyominoes.service.login.RegisterService
-import edu.carroll.polyominoes.service.login.RegisterServiceImpl
 import edu.carroll.polyominoes.web.form.RegisterForm
 import jakarta.validation.Valid
 import org.slf4j.LoggerFactory
-import org.springframework.stereotype.Controller;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
 import org.springframework.validation.ObjectError
@@ -14,42 +14,58 @@ import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PostMapping
 
 @Controller
+@EnableWebSecurity
 class RegisterController(private val registerService: RegisterService) {
 
     companion object {
-        private val log  = LoggerFactory.getLogger(RegisterController::class.java)
+        private val log = LoggerFactory.getLogger(RegisterController::class.java)
     }
 
+    /**
+     * Given a model returns the register page with a RegisterForm when an HTML get request is received.
+     *
+     * @param model : Model
+     * @return "register"
+     */
     @GetMapping("/register")
     fun loginGet(model: Model): String {
         model.addAttribute("registerForm", RegisterForm())
         return "register";
     }
 
+    /**
+     * Given a registerForm and a BindingResult will redirect to log in or show errors on the register page when
+     * an HTML Post request is received.
+     *
+     * @param registerForm : Form containing a new User's information such as Username, Email, and Raw Passwords.
+     * @param result : BindingResult
+     * @return "redirect:/login", otherwise null.
+     */
+
     @PostMapping("/register")
-    fun loginPost(@Valid @ModelAttribute registerForm: RegisterForm, result : BindingResult): String? {
+    fun loginPost(@Valid @ModelAttribute registerForm: RegisterForm, result: BindingResult): String? {
         var errorOccured = false
 
         if (result.hasErrors()) {
             return null;
         }
-        if (!registerService.validateUniqueUsername(registerForm)) {
-            result.addError(ObjectError("username", "Username is taken"))
+        if (!registerService.validateUniqueUsername(registerForm.username)) {
+            result.rejectValue("username", "error.user", "Username is taken")
             errorOccured = true;
         }
-        if (!registerService.validateUniqueEmail(registerForm)) {
-            result.addError(ObjectError("email", "Email is taken"))
+        if (!registerService.validateUniqueEmail(registerForm.email)) {
+            result.rejectValue("email", "error.email", "Email is taken")
             errorOccured = true;
         }
-        if (!validateConfirmPassword(registerForm)) {
-            result.addError(ObjectError("password", "Passwords do not match"))
+        if (!validateConfirmPassword(registerForm.rawPassword, registerForm.rawPasswordConfirm)) {
+            result.rejectValue("passwordConfirm", "error.passwordConfirm", "Passwords do not match")
             errorOccured = true;
         }
         if (errorOccured) {
             return null;
         }
 
-        if(!registerService.createUser(registerForm)) {
+        if (!registerService.createUser(registerForm.username, registerForm.email, registerForm.rawPassword)) {
             result.addError(ObjectError("globalError", "Account was unable to be created"))
             return null;
         }
@@ -63,8 +79,8 @@ class RegisterController(private val registerService: RegisterService) {
      * @param registerForm - Data containing user Register information, such as username, email, and password.
      * @return true if the passwords match, false otherwise
      */
-    private fun validateConfirmPassword(registerForm : RegisterForm) : Boolean {
-        if(registerForm.password != registerForm.passwordConfirm) {
+    private fun validateConfirmPassword(rawPassword: String, rawPasswordConfirm: String): Boolean {
+        if (rawPassword != rawPasswordConfirm) {
             log.debug("validateConfirmPassword: passwords !match");
             return false
         }
