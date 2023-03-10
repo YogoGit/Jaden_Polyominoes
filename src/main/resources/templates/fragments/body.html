@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body th:fragment="body(content)">
-<div th:replace="~{fragments/navbar :: navbar}"></div>
-<div class="wrapper">
-    <div th:replace="${content}"></div>
+<nav th:replace="~{fragments/navbar :: navbar}"/>
+<div class="wrapper mx-auto">
+    <div class="container-fluid">
+        <div th:replace="${content}"/>
+    </div>
 </div>
-<div th:replace="~{fragments/footer :: footer}"></div>
+<div th:replace="~{fragments/footer :: footer}"/>
 </body>
 </html>

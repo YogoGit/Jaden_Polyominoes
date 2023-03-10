@@ -1,0 +1,10 @@
+
+.wrapper {
+    margin-top: 5rem;
+}
+
+@media (min-width: 576px) {
+    .wrapper {
+        width: 70%;
+    }
+}

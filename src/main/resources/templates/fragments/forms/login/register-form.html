@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
 <form action="#" method="post" th:action="@{/register}" th:fragment="register-form" th:object="${registerForm}">
     <h3 class="text-center">Welcome</h3>
     <p class="text-center">Create your account</p>
     <div class="form-floating mb-3">
-        <input aria-describedby="username" class="form-control" id="username" placeholder="Username" th:errorclass="is-invalid"
+        <input aria-describedby="username" class="form-control" id="username" placeholder="Username"
+               th:errorclass="is-invalid"
                th:field="*{username}" type="text">
         <label class="form-label" for="username">Username</label>
         <div class="invalid-feedback">
@@ -28,19 +27,21 @@
         </div>
     </div>
     <div class="form-floating mb-3">
-        <input aria-describedby="password" class="form-control" id="password" placeholder="Password" th:errorclass="is-invalid"
-               th:field="*{password}" type="password">
+        <input aria-describedby="password" class="form-control" id="password" placeholder="Password"
+               th:errorclass="is-invalid"
+               th:field="*{rawPassword}" type="password">
         <label class="form-label" for="password">Password</label>
         <div class="invalid-feedback">
             <ul class="list-unstyled">
-                <th:block th:each="err : ${#fields.errors('password')}">
-                    <li><i class="fas fa-exclamation-circle"></i> <span th:text="${err}"></span></li>
+                <th:block th:each="err : ${#fields.errors('rawPassword')}">
+                    <li><i class="fas fa-exclamation-circle"></i> <span th:text="${err}"/></li>
                 </th:block>
             </ul>
         </div>
     </div>
     <div class="form-floating mb-3">
-        <input aria-describedby="confirmPassword" class="form-control" id="confirm-password" placeholder="Confirm Password"
+        <input aria-describedby="confirmPassword" class="form-control" id="confirm-password"
+               placeholder="Confirm Password"
                th:errorclass="is-invalid" th:field="*{rawPasswordConfirm}" type="password">
         <label class="form-label" for="confirm-password">Confirm Password</label>
         <div class="invalid-feedback">
@@ -53,4 +54,3 @@
     </div>
     <button class="btn btn-primary w-100" type="submit">Create Account</button>
 </form>
-</html>

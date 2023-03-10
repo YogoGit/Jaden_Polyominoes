@@ -18,23 +18,10 @@ class SecurityConfiguration(private val userDetailsService: UserDetailsService) 
     @Throws(Exception::class)
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
 
-        return http
-            .csrf().disable()
-            .authorizeHttpRequests()
-            .requestMatchers("/**").permitAll()
-            .anyRequest().authenticated()
-            .and()
-            .formLogin()
-            .loginPage("/login")
-            .defaultSuccessUrl("/", false)
-            .permitAll()
-            .and()
-            .logout()
-            .logoutUrl("/logout")
-            .logoutSuccessUrl("/login")
-            .and()
-            .userDetailsService(userDetailsService)
-            .build()
+        return http.csrf().disable().authorizeHttpRequests().requestMatchers("/**").permitAll()
+            .requestMatchers("/account").authenticated().anyRequest().authenticated().and().formLogin()
+            .loginPage("/login").defaultSuccessUrl("/", false).permitAll().and().logout().logoutUrl("/logout")
+            .logoutSuccessUrl("/login").and().userDetailsService(userDetailsService).build()
     }
 
     @Bean

@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header(~{::title},~{::link},~{::script})}">
+    <title>Polyominoes</title>
+
+    <link rel="stylesheet" th:href="@{vendor/datatables/datatables.min.css}"/>
+    <script crossorigin="anonymous" th:src="@{vendor/datatables/datatables.min.js}"></script>
+    <script th:src="@{js/leaderboard.js}" type="text/javascript"></script>
+
+</head>
+<body th:replace="~{fragments/body :: body(~{::table})}">
+<table class="table table-striped display w-100" id="leaderboards">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Username</th>
+        <th>Score</th>
+        <th>Polyominoes</th>
+        <th>Time</th>
+        <th>Date</th>
+    </tr>
+    </thead>
+</table>
+</body>
+</html>

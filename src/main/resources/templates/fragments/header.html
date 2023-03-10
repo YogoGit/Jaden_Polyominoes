@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head th:fragment="header(title,links)">
+<head th:fragment="header(title,links,scripts)">
 
     <meta content="Jaden Bathon 2023" name="author">
     <meta content="width=device-width, initial-scale=1" name="viewport">
@@ -20,11 +18,19 @@
     <!-- Fontawesome 5.15 CSS -->
     <link rel="stylesheet" th:href="@{vendor/fontawesome/css/all.min.css}"/>
 
-    <!-- Override Boostrap 5 CSS -->
-    <link rel="stylesheet" th:href="@{/css/bootstrap-overrides.css}"/>
+    <!-- JQuery 3.6.3 -->
+    <script crossorigin="anonymous" th:src="@{vendor/jquery/js/jquery.min.js}"></script>
 
-    <!-- Addition Links -->
+    <!-- Override Boostrap 5 CSS -->
+    <link rel="stylesheet" th:href="@{css/bootstrap-overrides.css}"/>
+
+    <!-- Site CSS -->
+    <link rel="stylesheet" th:href="@{css/styles.css}"/>
+
+    <!-- Additional Links -->
     <th:block th:replace="${links}"/>
 
+    <!-- Additional Scripts -->
+    <th:block th:replace="${scripts}"/>
+
 </head>
-</html>
