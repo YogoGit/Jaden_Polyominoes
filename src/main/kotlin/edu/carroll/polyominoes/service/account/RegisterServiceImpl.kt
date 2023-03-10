@@ -14,9 +14,9 @@ class RegisterServiceImpl(private val registerRepo: RegisterRepository) : Regist
     }
 
     /**
-     * Given a registerForm, determine if the user's given username does not already exist in the database.
+     * Given a username, determine if the user's given username does not already exist in the database.
      *
-     * @param registerForm - Data containing user Register information, such as username, email, and password.
+     * @param username - An username representing a user's account
      * @return true if the user's given username is not in the database, false otherwise
      */
     override fun validateUniqueUsername(username: String): Boolean {
@@ -38,9 +38,9 @@ class RegisterServiceImpl(private val registerRepo: RegisterRepository) : Regist
     }
 
     /**
-     * Given a registerForm, determine if the user's given email does not already exist in the database.
+     * Given an email, determine if the user's given email does not already exist in the database.
      *
-     * @param registerForm - Data containing user Register information, such as username, email, and password.
+     * @param email - an email which represents the user account
      * @return true if the user's given email is not in the database, false otherwise
      */
     override fun validateUniqueEmail(email: String): Boolean {
@@ -62,9 +62,11 @@ class RegisterServiceImpl(private val registerRepo: RegisterRepository) : Regist
     }
 
     /**
-     * Given a registerForm, creates a new account in the database.
+     * Given a username, email, and rawPassword, creates a new account in the database.
      *
-     * @param registerForm - Data containing user Register information, such as username, email, and password.
+     * @param username: the valid username representing the user's account
+     * @param email: a valid email to be linked to the user's account
+     * @param rawPassword: a rawPassword for the user's account which will be hashed before storing
      * @return true if an account was added to the database, false otherwise
      */
     override fun createUser(username: String, email: String, rawPassword: String): Boolean {

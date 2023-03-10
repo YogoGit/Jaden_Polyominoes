@@ -30,8 +30,8 @@ class UserDetailsServiceImpl(private val loginRepo: LoginRepository) : UserDetai
     override fun loadUserByUsername(username: String?): UserDetails {
 
         if (username.isNullOrBlank()) {
-            log.warn("loadUserByUsername: username was null")
-            throw UsernameNotFoundException("username was null")
+            log.warn("loadUserByUsername: username was null or blank")
+            throw UsernameNotFoundException("username was null or blank")
         }
 
         log.debug("loadUserByUsername: attempting to find user '{}'", username)
@@ -50,10 +50,12 @@ class UserDetailsServiceImpl(private val loginRepo: LoginRepository) : UserDetai
         if (users.size != 1) {
             if (users.size > 1) {
                 log.warn("validateUser: found {} users for '{}'", users.size, username)
+                throw UsernameNotFoundException("Found ${users.size} users for '${username}'")
+
             } else {
-                log.debug("validateUser: found no users for {}", username)
+                log.debug("validateUser: found no users for '{}'", username)
+                throw UsernameNotFoundException("Found no users for '${username}'")
             }
-            throw UsernameNotFoundException("Found ${users.size} users for '${username}'")
         }
 
 

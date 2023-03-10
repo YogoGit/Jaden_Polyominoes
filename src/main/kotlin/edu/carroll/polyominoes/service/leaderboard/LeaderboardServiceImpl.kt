@@ -19,14 +19,15 @@ class LeaderboardServiceImpl(private val leaderboardRepo: LeaderboardRepo) : Lea
                     mutableListOf<LeaderboardRow>(), 0, 0, 0
             )
         }
+        /**
+         *  Represents the valid column in the leaderboard object
+         */
+        private enum class Column {
+            position, username, score, polyominoes, time, date
+        }
     }
 
-    /**
-     *  Represents the valid column in the leaderboard object
-     */
-    enum class Column {
-        position, username, score, polyominoes, time, date
-    }
+
 
     /**
      * When given a request creates DatatablesResponse of Leaderboard rows that represents the information in the
