@@ -43,7 +43,7 @@ class LeaderboardServiceImpl(private val leaderboardRepo: LeaderboardRepo) : Lea
             return emptyLeaderboard
         }
 
-        val pageSize = request.length - request.start
+        val pageSize = request.length
         val pageNum = request.start / pageSize
         val pageable = PageRequest.of(pageNum, pageSize)
 

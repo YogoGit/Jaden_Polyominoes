@@ -8,12 +8,12 @@ import java.time.LocalDateTime
 
 class LeaderboardRow() {
 
-    constructor(index: Long, leaderboard: Leaderboard): this() {
+    constructor(index: Long, leaderboard: Leaderboard) : this() {
         this.index = index
         username = leaderboard.account.username
         score = leaderboard.score
         polyominoes = leaderboard.polyominoes
-        time = leaderboard.time.toMillis()/60000f
+        time = leaderboard.time.toMillis() / 60000f
         date = leaderboard.date
     }
 

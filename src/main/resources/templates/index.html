@@ -3,6 +3,9 @@
 <head th:replace="~{fragments/header :: header(~{::title},~{},~{})}">
     <title>Polyominoes</title>
 </head>
-<body th:replace="~{fragments/body :: body(~{})}">
+<body th:replace="~{fragments/body :: body(~{})}" sec:authorize="!isAuthenticated()">
+</body>
+<body th:replace="~{fragments/body :: body(~{::form})}" sec:authorize="isAuthenticated()">
+    <form th:replace="~{fragments/forms/score-form :: score-form}"/>
 </body>
 </html>

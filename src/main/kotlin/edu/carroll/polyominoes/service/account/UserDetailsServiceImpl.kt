@@ -1,7 +1,7 @@
 package edu.carroll.polyominoes.service.account
 
-import edu.carroll.polyominoes.service.account.model.SecurityAccount
 import edu.carroll.polyominoes.jpa.repo.account.LoginRepository
+import edu.carroll.polyominoes.service.account.model.SecurityAccount
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService

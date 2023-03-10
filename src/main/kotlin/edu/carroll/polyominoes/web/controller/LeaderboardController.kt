@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping
 
 
 @Controller
-class LeaderboardController() {
+class LeaderboardController {
     @GetMapping("/leaderboard")
     fun leaderboardGet(): String {
         return "leaderboard"

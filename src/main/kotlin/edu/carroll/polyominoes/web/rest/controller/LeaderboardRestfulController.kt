@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 class LeaderboardRestfulController(private val leaderboardService: LeaderboardService) {
 
     @PostMapping
-    fun getLeaderboards(@RequestBody request: DatatablesRequest): DatatablesResponse<LeaderboardRow> {
+    fun getLeaderboardsPost(@RequestBody request: DatatablesRequest): DatatablesResponse<LeaderboardRow> {
         println("Test")
         return leaderboardService.getLeaderboard(request)
     }

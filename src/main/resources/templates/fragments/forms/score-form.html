@@ -1,0 +1,33 @@
+<form action="#" method="post" th:action="@{/}" th:fragment="score-form" th:object="${scoreForm}" class="row g-3">
+    <div class="col-12 text-danger" th:if="${#fields.hasGlobalErrors()}" th:errors="*{global}">Global Error</div>
+    <div class="col-auto">
+        <input aria-describedby="score" class="form-control" id="score" name="score"
+               placeholder="Score" th:field="*{score}"
+               required type="number">
+        <label for="score">Score</label>
+        <th:block th:each="err : ${#fields.errors('score')}">
+            <li><i class="fas fa-exclamation-circle"></i> <span th:text="${err}"></span></li>
+        </th:block>
+    </div>
+    <div class="col-auto">
+        <input aria-describedby="polyominoes" class="form-control" id="polyominoes" name="polyominoes"
+               placeholder="Polyominoes" th:field="*{polyominoes}"
+               required type="number">
+        <label for="polyominoes">Polyominoes</label>
+        <th:block th:each="err : ${#fields.errors('polyominoes')}">
+            <li><i class="fas fa-exclamation-circle"></i> <span th:text="${err}"></span></li>
+        </th:block>
+    </div>
+    <div class="col-auto">
+        <input aria-describedby="milliseconds" class="form-control" id="milliseconds" name="milliseconds"
+               placeholder="milliseconds" th:field="*{milliseconds}"
+               required type="number">
+        <label for="milliseconds">Milliseconds</label>
+        <th:block th:each="err : ${#fields.errors('milliseconds')}">
+            <li><i class="fas fa-exclamation-circle"></i> <span th:text="${err}"></span></li>
+        </th:block>
+    </div>
+    <div class="col-auto">
+        <button class="btn btn-primary w-100" type="submit">Save</button>
+    </div>
+</form>

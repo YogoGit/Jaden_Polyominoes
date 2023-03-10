@@ -3,7 +3,7 @@ $(document).ready(function () {
             "processing": true,
             "serverSide": true,
             "searching": false,
-            "order": [[2,'asc']],
+            "order": [[2, 'asc']],
             "ajax": {
                 "url": "/api/leaderboard",
                 "type": "POST",
@@ -14,12 +14,12 @@ $(document).ready(function () {
                 }
             },
             "columns": [
-                {"data": "index", "width": "5%", "orderable": false },
-                {"data": "username", "width": "23%", "orderable": false },
-                {"data": "score", "width": "18%" },
-                {"data": "polyominoes", "width": "18%" },
-                {"data": "time", "width": "18%" },
-                {"data": "date","width": "18%" },
+                {"data": "index", "width": "5%", "orderable": false},
+                {"data": "username", "width": "23%", "orderable": false},
+                {"data": "score", "width": "18%"},
+                {"data": "polyominoes", "width": "18%"},
+                {"data": "time", "width": "18%"},
+                {"data": "date", "width": "18%"},
             ]
         });
     }
