@@ -25,7 +25,11 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+	implementation("org.junit.jupiter:junit-jupiter:5.8.1")
 	runtimeOnly("org.postgresql:postgresql")
+	testImplementation(kotlin("test"))
+	testImplementation("com.h2database:h2")
+	testImplementation("org.hibernate.orm:hibernate-core")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
@@ -34,6 +38,10 @@ tasks.withType<KotlinCompile> {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
 		jvmTarget = "17"
 	}
+}
+
+tasks.withType<Jar> {
+
 }
 
 tasks.withType<Test> {
