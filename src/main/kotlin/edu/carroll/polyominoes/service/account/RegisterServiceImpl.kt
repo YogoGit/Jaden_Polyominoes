@@ -20,6 +20,12 @@ class RegisterServiceImpl(private val registerRepo: RegisterRepository) : Regist
      * @return true if the user's given username is not in the database, false otherwise
      */
     override fun validateUniqueUsername(username: String): Boolean {
+
+        if (username.isNullOrBlank()) {
+            log.warn("validateUniqueUsername: username '{}' was null or blank", username)
+            return false
+        }
+
         log.info("validateUniqueUsername: Checking if '{}' is linked to an account", username)
         val users = registerRepo.findByUsernameIgnoreCase(username)
 
@@ -46,6 +52,11 @@ class RegisterServiceImpl(private val registerRepo: RegisterRepository) : Regist
     override fun validateUniqueEmail(email: String): Boolean {
         log.info("validateUniqueEmail: Checking if '{}' is linked to an account", email)
         val emails = registerRepo.findByEmailIgnoreCase(email)
+
+        if (email.isNullOrBlank()) {
+            log.warn("validateUniqueEmail email '{}' was null or blank", email)
+            return false
+        }
 
         // We expect 0 or 1, so if we get more than 1, bail out as this is an error we don't deal with properly.
         if (emails.size != 0) {
@@ -86,11 +97,21 @@ class RegisterServiceImpl(private val registerRepo: RegisterRepository) : Regist
             return false
         }
 
+        if (!validateUniqueUsername(username)) {
+            log.warn("createUser: username '{}' already exists", username)
+            return false
+        }
+
+        if (!validateUniqueEmail(email)) {
+            log.warn("createUser: email '{}' already exists", email)
+            return false
+        }
+
         val hashPassword = BCrypt.hashpw(rawPassword, BCrypt.gensalt())
         val user: Account = Account(username, email, hashPassword)
         registerRepo.save(user)
 
-        log.info("createUser: Created an account for {}", username)
+        log.info("createUser: Created an account for '{}'", username)
         return true
     }
 

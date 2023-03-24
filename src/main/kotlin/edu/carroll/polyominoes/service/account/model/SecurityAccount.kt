@@ -69,5 +69,13 @@ class SecurityAccount(private val account: Account) : UserDetails {
         return true
     }
 
+    override fun equals(o: Any?): Boolean {
+        if (this === o) return false
+        if (o == null || o::class != this::class) {
+            return false
+        }
+        val userDetails = o as SecurityAccount
+        return (account.username == userDetails.username && account.hashPassword == userDetails.password)
+    }
 
 }

@@ -4,9 +4,9 @@ class Order() {
 
     constructor(column: Int, direction: String) : this() {
         this.column = column
-        this.direction = direction
+        this.dir = direction
     }
 
     var column: Int? = null
-    var direction: String? = null
+    var dir: String? = null
 }

@@ -3,7 +3,7 @@ $(document).ready(function () {
             "processing": true,
             "serverSide": true,
             "searching": false,
-            "order": [[2, 'asc']],
+            "order": [[2, 'desc']],
             "ajax": {
                 "url": "/api/leaderboard",
                 "type": "POST",

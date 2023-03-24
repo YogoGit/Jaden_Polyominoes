@@ -6,6 +6,7 @@ import edu.carroll.polyominoes.web.rest.model.datatables.DatatablesResponse
 import edu.carroll.polyominoes.web.rest.model.datatables.leaderboard.LeaderboardRow
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 
@@ -19,15 +20,15 @@ class LeaderboardServiceImpl(private val leaderboardRepo: LeaderboardRepo) : Lea
                     mutableListOf<LeaderboardRow>(), 0, 0, 0
             )
         }
-        /**
-         *  Represents the valid column in the leaderboard object
-         */
-        private enum class Column {
-            position, username, score, polyominoes, time, date
-        }
     }
 
 
+    /**
+     *  Represents the valid column in the leaderboard object
+     */
+    private enum class Column {
+        position, username, score, polyominoes, time, date
+    }
 
     /**
      * When given a request creates DatatablesResponse of Leaderboard rows that represents the information in the
@@ -46,7 +47,7 @@ class LeaderboardServiceImpl(private val leaderboardRepo: LeaderboardRepo) : Lea
 
         val pageSize = request.length
         val pageNum = request.start / pageSize
-        val pageable = PageRequest.of(pageNum, pageSize)
+        lateinit var pageable: Pageable
 
         log.info("getLeaderboard: Getting leaderboard page '{}' with a size of '{}'", pageNum, pageSize)
 
@@ -62,26 +63,28 @@ class LeaderboardServiceImpl(private val leaderboardRepo: LeaderboardRepo) : Lea
         val order = request.order[0]
 
         if (order.column != null) {
-            if (!(Column.values().size <= order.column!! || order.column!! < 0)) {
-                log.warn("getLeaderboard: Order column index is out of bounds")
+            if (!(Column.values().size >= order.column!! || order.column!! > 0)) {
+                log.warn("getLeaderboard: Order column index is out of bounds order.column '{}' and Column.values '{}'", order.column, Column.values().size)
+                pageable = PageRequest.of(pageNum, pageSize)
             } else {
-                val sort = Sort.by(Column.values()[order.column!!].toString())
-                when (order.direction) {
+                lateinit var sort : Sort
+                when (order.dir) {
                     "asc" -> {
-                        sort.ascending()
+                        println(order.dir)
+                        sort = Sort.by(Sort.Direction.ASC ,Column.values()[order.column!!].toString())
                     }
                     "desc" -> {
-                        sort.descending()
+                        sort = Sort.by(Sort.Direction.DESC ,Column.values()[order.column!!].toString())
                     }
                     else -> {
-                        log.debug(
+                        log.warn(
                                 "getLeaderboard: '{}' is an invalid entry for Order direction defaulting to desc",
-                                order.direction
+                                order.dir
                         )
-                        sort.descending()
+                        sort = Sort.by(Sort.Direction.DESC ,Column.values()[order.column!!].toString())
                     }
                 }
-                pageable.withSort(sort)
+                pageable = PageRequest.of(pageNum, pageSize, sort)
             }
         }
 
