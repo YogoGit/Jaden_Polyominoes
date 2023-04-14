@@ -1,5 +1,27 @@
 version: "3"
 services:
+
+  application:
+    build: spring-application
+    restart: unless-stopped
+    depends_on:
+      postgres_primary:
+        condition: service_started
+    ports:
+      - '0.0.0.0:80:80'
+    environment:
+      SPRING_APPLICATION_JSON: '{
+            "spring.datasource.url" : "jdbc:postgresql://db_primary:5432/polyominoes",
+            "spring.datasource.username" : "postgres",
+            "spring.datasource.password" : "admin",
+            "spring.datasource.driverClassName" : "org.postgresql.Driver",
+            "spring.jpa.hibernate.ddl-auto" : "update"
+          }'
+      networks:
+        default:
+          aliases:
+            - app_cluster
+
   postgres_primary:
     build: ./postgres/primary
     ports:
@@ -10,6 +32,8 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=admin
       - POSTGRES_DB=polyominoes
+      - POSTGRES_APP_USER=polyominoes
+      - POSTGRES_APP_PASSWORD= appPassword
     networks:
       default:
         aliases:
