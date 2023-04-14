@@ -1,4 +1,4 @@
-package edu.carroll.polyominoes.web.rest.model.datatables
+package edu.carroll.polyominoes.web.rest.ajax.datatables
 
 /**
  * Represents the ajax response for Datatables.js
@@ -14,7 +14,7 @@ class DatatablesResponse<T> {
      * @param data: a list objects representing one row of the table.
      */
 
-    constructor(data: List<T>, recordsFiltered: Long, recordsTotal: Long, draw: Long) {
+    constructor(data: List<T>, recordsFiltered: Long, recordsTotal: Long, draw: Int) {
         this.data = data
         this.recordsFiltered = recordsFiltered
         this.recordsTotal = recordsTotal
@@ -24,6 +24,6 @@ class DatatablesResponse<T> {
     var data = listOf<T>()
     var recordsFiltered: Long = 0
     var recordsTotal: Long = 0
-    var draw: Long = 0
+    var draw = 0
 
 }

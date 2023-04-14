@@ -22,10 +22,13 @@ class Leaderboard() {
         private val TAB: String = "\t"
     }
 
-    constructor(score: Long, polyominoes: Long, time: Duration, date: LocalDateTime, account: Account) : this() {
-        this.score = score
-        this.polyominoes = polyominoes
+    constructor(score: Long, pieces: Long, time: Duration, date: LocalDateTime, account: Account) : this() {
+
         this.time = time
+        this.level = level
+        this.score = score
+        this.rows = rows
+        this.pieces = pieces
         this.date = date
         this.account = account
     }
@@ -34,14 +37,22 @@ class Leaderboard() {
     @GeneratedValue
     var id: Long? = null
 
-    @Column(name = "score", nullable = false)
-    var score: Long? = null
-
-    @Column(name = "polyominoes", nullable = false)
-    var polyominoes: Long? = null
-
     @Column(name = "time", columnDefinition = "numeric", nullable = false)
     var time: Duration = Duration.ZERO
+
+    @Column(name = "level", nullable = false)
+    var level: Long = 0
+
+    @Column(name = "score", nullable = false)
+    var score: Long = 0
+
+    @Column(name = "rows", nullable = false)
+    var rows: Long = 0
+
+    @Column(name = "pieces", nullable = false)
+    var pieces: Long = 0
+
+
 
     @Column(name = "date", nullable = false)
     var date: LocalDateTime? = null

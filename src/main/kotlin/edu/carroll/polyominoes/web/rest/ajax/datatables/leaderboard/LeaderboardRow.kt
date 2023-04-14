@@ -1,4 +1,4 @@
-package edu.carroll.polyominoes.web.rest.model.datatables.leaderboard
+package edu.carroll.polyominoes.web.rest.ajax.datatables.leaderboard
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
@@ -10,17 +10,21 @@ class LeaderboardRow() {
 
     constructor(index: Long, leaderboard: Leaderboard) : this() {
         this.index = index
-        username = leaderboard.account.username
-        score = leaderboard.score
-        polyominoes = leaderboard.polyominoes
-        time = leaderboard.time.toMillis() / 60000f
-        date = leaderboard.date
+        this.username = leaderboard.account.username
+        this.score = leaderboard.score
+        this.level = leaderboard.level
+        this.rows = leaderboard.rows
+        this.pieces = pieces
+        this.time = leaderboard.time.toMillis() / 1000f
+        this.date = leaderboard.date
     }
 
     var index: Long? = null
     var username: String? = null
     var score: Long? = null
-    var polyominoes: Long? = null
+    var level: Long? = null
+    var rows: Long? = null
+    var pieces: Long? = null
     var time: Float? = null
 
     @JsonSerialize(using = LocalDateTimeSerializer::class)
