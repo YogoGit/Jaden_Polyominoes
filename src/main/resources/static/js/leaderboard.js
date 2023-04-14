@@ -15,11 +15,13 @@ $(document).ready(function () {
             },
             "columns": [
                 {"data": "index", "width": "5%", "orderable": false},
-                {"data": "username", "width": "23%", "orderable": false},
-                {"data": "score", "width": "18%"},
-                {"data": "polyominoes", "width": "18%"},
-                {"data": "time", "width": "18%"},
-                {"data": "date", "width": "18%"},
+                {"data": "username", "width": "25%", "orderable": false},
+                {"data": "score", "width": "15%"},
+                {"data": "level", "width": "10%"},
+                {"data": "rows", "width": "10%"},
+                {"data": "pieces", "width": "10%"},
+                {"data": "time", "width": "10%"},
+                {"data": "date", "width": "15%"},
             ]
         });
     }
