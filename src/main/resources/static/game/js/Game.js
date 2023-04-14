@@ -159,6 +159,7 @@ export default class Game {
 
     restart() {
         this.#end();
+        this.#manager.clear();
         this.#statsKeeper.stopTimer();
         this.#manager = new PieceManager(this);
         this.#statsKeeper = new StatsKeeper(this);

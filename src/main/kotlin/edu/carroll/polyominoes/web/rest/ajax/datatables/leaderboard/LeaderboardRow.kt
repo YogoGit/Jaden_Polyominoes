@@ -14,7 +14,7 @@ class LeaderboardRow() {
         this.score = leaderboard.score
         this.level = leaderboard.level
         this.rows = leaderboard.rows
-        this.pieces = pieces
+        this.pieces = leaderboard.pieces
         this.time = leaderboard.time.toMillis() / 1000f
         this.date = leaderboard.date
     }

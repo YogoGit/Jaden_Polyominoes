@@ -22,7 +22,15 @@ class Leaderboard() {
         private val TAB: String = "\t"
     }
 
-    constructor(score: Long, pieces: Long, time: Duration, date: LocalDateTime, account: Account) : this() {
+    constructor(
+            score: Long,
+            level: Long,
+            pieces: Long,
+            rows: Long,
+            time: Duration,
+            date: LocalDateTime,
+            account: Account
+    ) : this() {
 
         this.time = time
         this.level = level
@@ -51,8 +59,6 @@ class Leaderboard() {
 
     @Column(name = "pieces", nullable = false)
     var pieces: Long = 0
-
-
 
     @Column(name = "date", nullable = false)
     var date: LocalDateTime? = null

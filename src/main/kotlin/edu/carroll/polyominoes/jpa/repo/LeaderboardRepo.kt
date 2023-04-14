@@ -2,12 +2,10 @@ package edu.carroll.polyominoes.jpa.repo
 
 import edu.carroll.polyominoes.jpa.model.Account
 import edu.carroll.polyominoes.jpa.model.Leaderboard
+import edu.carroll.polyominoes.jpa.projection.ScoreOnly
 import org.springframework.data.jpa.repository.JpaRepository
 
-/**
- * https://frontbackend.com/thymeleaf/spring-boot-bootstrap-thymeleaf-datatable
- * @see <a href="https://www.baeldung.com/spring-data-jpa-pagination-sorting">Baeldung Pagination and Sorting using Spring Data JPA</a>
- */
 interface LeaderboardRepo : JpaRepository<Leaderboard, Long> {
+    fun findScoreByAccount(account: Account): List<ScoreOnly>
     fun findByAccount(account: Account): List<Leaderboard>
 }

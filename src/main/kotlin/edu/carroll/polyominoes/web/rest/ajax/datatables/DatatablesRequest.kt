@@ -2,7 +2,6 @@ package edu.carroll.polyominoes.web.rest.ajax
 
 import edu.carroll.polyominoes.web.rest.ajax.datatables.Column
 import edu.carroll.polyominoes.web.rest.ajax.datatables.Order
-import jakarta.validation.constraints.Digits
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
 

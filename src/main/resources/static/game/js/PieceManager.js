@@ -22,6 +22,10 @@ export default class PieceManager {
         this.#pieceOnHold = undefined;
     }
 
+    clear() {
+        this.#onHold.clear();
+    }
+
     getPieces() {
         const piecesList = [];
         for (let k in polyominoes) {

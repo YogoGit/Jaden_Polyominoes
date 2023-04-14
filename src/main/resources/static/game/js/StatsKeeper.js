@@ -98,10 +98,14 @@ export default class StatsKeeper {
             "pieces": this.#piecesPlayed
         }
         $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
             type: "POST",
             url: "/api/game",
-            data: stats,
-            dataType: "text"
+            dataType: "json",
+            data: JSON.stringify(stats)
         });
     }
 }
