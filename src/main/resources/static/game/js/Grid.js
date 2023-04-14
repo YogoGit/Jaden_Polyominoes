@@ -7,8 +7,6 @@
  *   2. Scorekeeper
  */
 
-import Game from "./Game.js";
-
 /**
  *  Creates a grid for a game of Polyominoes.
  */
@@ -40,11 +38,11 @@ export default class Grid {
     }
 
     get width() {
-       return this.#canvas.getBoundingClientRect().width;
+        return this.#canvas.getBoundingClientRect().width;
     }
 
     get height() {
-       return this.#canvas.getBoundingClientRect().height
+        return this.#canvas.getBoundingClientRect().height
     }
 
     get context() {
@@ -52,13 +50,13 @@ export default class Grid {
     }
 
     clear() {
-        this.#ctx.clearRect(0,0, this.width, this.height);
+        this.#ctx.clearRect(0, 0, this.width, this.height);
     }
 
     clearFullRows() {
         const fullRows = this.#getFullRows();
         const grid = this;
-        fullRows.forEach(function(row) {
+        fullRows.forEach(function (row) {
             grid.#clearRow(row);
         });
         this.redraw()
@@ -68,12 +66,12 @@ export default class Grid {
     #clearRow(blocks) {
         const rowNum = blocks[0].top;
         const grid = this;
-        blocks.forEach(function(block) {
+        blocks.forEach(function (block) {
             const i = grid.#lockedBlocks.indexOf(block);
             grid.#lockedBlocks.splice(i, 1);
             block.removeFrom()
         });
-        this.#lockedBlocks.forEach(function(block) {
+        this.#lockedBlocks.forEach(function (block) {
             if (block.top < rowNum)
                 block.moveDown(1);
         });
@@ -84,7 +82,7 @@ export default class Grid {
         for (let count = this.#blocksTall; count >= 0; --count) {
             rows.push([]);
         }
-        this.#lockedBlocks.forEach(function(block) {
+        this.#lockedBlocks.forEach(function (block) {
             rows[block.top].push(block);
         });
         return rows;
@@ -94,7 +92,7 @@ export default class Grid {
         const rows = this.#partitionIntoRows();
         const fullRows = [];
         const grid = this;
-        rows.forEach(function(row) {
+        rows.forEach(function (row) {
             if (row.length === grid.#blocksWide) {
                 fullRows.push(row);
             }
@@ -151,7 +149,6 @@ export default class Grid {
             block.draw();
         });
     }
-
 
 
 }

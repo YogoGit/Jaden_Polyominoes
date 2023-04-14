@@ -45,8 +45,6 @@ export default class Game {
     #pacingDelay;
 
 
-
-
     constructor() {
         this.#controller = new GameController(this);
         this.#manager = new PieceManager(this);
@@ -69,12 +67,12 @@ export default class Game {
         Object.freeze(this);
     }
 
-    controller() {
-        return this.#controller;
-    }
-
     get level() {
         return this.#currentLevel;
+    }
+
+    controller() {
+        return this.#controller;
     }
 
     isOver() {
@@ -97,7 +95,6 @@ export default class Game {
         this.#currentLevel = this.#currentLevel + 1;
         this.turnOnGravity();
     }
-
 
 
     moveToBottom() {
@@ -180,6 +177,11 @@ export default class Game {
     }
 
     rotateCounterClockwise() {
+        this.#currentPiece.configureClockwise();
+        this.#currentPiece.rotate();
+    }
+    rotateCounterclockwise() {
+        this.#currentPiece.configureCounterclockwise();
         this.#currentPiece.rotate();
     }
 
@@ -218,7 +220,9 @@ export default class Game {
         this.#gameIsReady = true;
         this.#statsKeeper.updateStatsDisplay();
         const game = this;
-        this.#pacingTimerId = setInterval(function(){game.makeOnDeckPiecePace(game)}, this.#pacingDelay);
+        this.#pacingTimerId = setInterval(function () {
+            game.makeOnDeckPiecePace(game)
+        }, this.#pacingDelay);
         this.#messageElement.text("Press any key to start")
     }
 
@@ -277,9 +281,11 @@ export default class Game {
         if (this.#gravityTimerId !== undefined) {
             clearInterval(this.#gravityTimerId);
         }
-        const delay = (this.#currentLevel < 10)? this.#gravityDelay - 50 * (this.#currentLevel - 1) : 50;
+        const delay = (this.#currentLevel < 10) ? this.#gravityDelay - 50 * (this.#currentLevel - 1) : 50;
         const game = this;
-        this.#gravityTimerId = setInterval(function(){game.makePieceFallOneStep(game)}, delay);
+        this.#gravityTimerId = setInterval(function () {
+            game.makePieceFallOneStep(game)
+        }, delay);
     }
 
 }

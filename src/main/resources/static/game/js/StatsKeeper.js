@@ -29,7 +29,7 @@ export default class StatsKeeper {
     }
 
     updateStatsDisplay() {
-        this.#timeElement.text(Math.round(this.#time * 100)/100);
+        this.#timeElement.text(Math.round(this.#time * 100) / 100);
         this.#levelElement.text(this.#game.level);
         this.#scoreElement.text(this.#score);
         this.#rowsClearedElement.text(this.#rowsCleared);
@@ -42,8 +42,8 @@ export default class StatsKeeper {
     }
 
     incrementTime(statsKeeper) {
-        statsKeeper.#time = statsKeeper.#time + 0.1 ;
-        statsKeeper.#timeElement.text(Math.round(statsKeeper.#time * 100)/100);
+        statsKeeper.#time = statsKeeper.#time + 0.1;
+        statsKeeper.#timeElement.text(Math.round(statsKeeper.#time * 100) / 100);
         return;
     }
 
@@ -54,7 +54,9 @@ export default class StatsKeeper {
 
     startTimer() {
         const statsKeeper = this;
-        this.#gameTimerId = setInterval(function(){statsKeeper.incrementTime(statsKeeper)}, 100);
+        this.#gameTimerId = setInterval(function () {
+            statsKeeper.incrementTime(statsKeeper)
+        }, 100);
     }
 
     stopTimer() {
@@ -85,13 +87,13 @@ export default class StatsKeeper {
         for (let count = 0; count < numRows; count++) {
             this.incrementRowsCleared();
         }
-        let points = 100 + (numRows-1)*300;
+        let points = 100 + (numRows - 1) * 300;
         this.increaseScore(points);
     }
 
     sendStats() {
         const stats = {
-            "time": Math.round(this.#time * 100)/100,
+            "time": Math.round(this.#time * 100) / 100,
             "level": this.#game.level,
             "score": this.#score,
             "rows": this.#rowsCleared,

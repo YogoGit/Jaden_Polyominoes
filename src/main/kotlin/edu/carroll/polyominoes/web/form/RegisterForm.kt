@@ -31,7 +31,7 @@ class RegisterForm() {
             regexp = "^[a-zA-Z0-9!@#\$%^&*()_+={}\\[\\]|\\\\:;\"'<,>.?/-]*\$",
             message = "Passwords can contain letters (a-z), numbers (0-9), and special characters (!@#\$%^&*()_+={}\\[\\]|\\\\:;\"'<,>.?/)"
     )
-    @field:Size(min = 8, message = "Password must be between 8 and 128 characters")
+    @field:Size(min = 8, max = 128, message = "Password must be between 8 and 128 characters")
     var rawPassword: String = ""
 
     @field:NotBlank(message = "Confirm your password")

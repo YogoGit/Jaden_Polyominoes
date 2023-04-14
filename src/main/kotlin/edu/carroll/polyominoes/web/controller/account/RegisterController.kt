@@ -49,11 +49,11 @@ class RegisterController(private val registerService: RegisterService) {
         if (result.hasErrors()) {
             return null
         }
-        if (!registerService.validateUniqueUsername(registerForm.username)) {
+        if (registerService.validateUsernameExist(registerForm.username)) {
             result.rejectValue("username", "error.user", "Username is taken")
             errorOccured = true
         }
-        if (!registerService.validateUniqueEmail(registerForm.email)) {
+        if (registerService.validateEmailExist(registerForm.email)) {
             result.rejectValue("email", "error.email", "Email is taken")
             errorOccured = true
         }

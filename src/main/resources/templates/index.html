@@ -1,14 +1,14 @@
 <!DOCTYPE HTML>
-<html xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/header :: header(~{::title},~{::link},~{::script})}">
     <title>Polyominoes</title>
 
     <link rel="stylesheet" th:href="@{game/css/game.css}"/>
-    <script type="module" th:src="@{js/game.js}"></script>
+    <script th:src="@{js/game.js}" type="module"></script>
 
 
 </head>
 <body th:replace="~{fragments/body :: body(~{::div})}">
-    <div th:replace="~{fragments/game :: game}"/>
+<div th:replace="~{fragments/game :: game}"/>
 </body>
 </html>

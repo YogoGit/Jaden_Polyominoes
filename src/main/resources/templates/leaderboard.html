@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/header :: header(~{::title},~{::link},~{::script})}">
-    <title>Polyominoes</title>
+    <title>Polyominoes - Leaderboard</title>
 
     <link rel="stylesheet" th:href="@{vendor/datatables/datatables.min.css}"/>
     <script crossorigin="anonymous" th:src="@{vendor/datatables/datatables.min.js}"></script>
@@ -9,7 +9,7 @@
 
 </head>
 <body th:replace="~{fragments/body :: body(~{::table})}">
-<table class="table table-striped display w-100" id="leaderboards">
+<table class="table table-light table-striped display w-100" id="leaderboards">
     <thead>
     <tr>
         <th>#</th>

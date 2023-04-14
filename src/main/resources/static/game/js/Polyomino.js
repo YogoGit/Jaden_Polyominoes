@@ -9,16 +9,27 @@ export default class Polyomino {
     #isLocked;
     #grid;
     #transformationMatrix;
-    
+
     constructor(blocks, pivotBlockIndex, minLevel) {
         this.#blocks = blocks;
         this.#numBlocks = blocks.length;
         this.#pivotIndex = pivotBlockIndex;
-        this.#pivotBlock = (0 <= pivotBlockIndex && pivotBlockIndex < blocks.length-1) ? blocks[pivotBlockIndex] : blocks[0];
+        this.#pivotBlock = (0 <= pivotBlockIndex && pivotBlockIndex < blocks.length - 1) ? blocks[pivotBlockIndex] : blocks[0];
         this.#minLevel = minLevel;
         this.#isHorizontal = true;
         this.#isLocked = false;
         this.#grid = undefined;
+        this.#transformationMatrix = undefined;
+    }
+
+    configureClockwise() {
+        this.#transformationMatrix = [
+            [0, 1],
+            [-1, 0]
+        ];
+    }
+
+    configureCounterclockwise() {
         this.#transformationMatrix = [
             [0, -1],
             [1, 0]
@@ -89,7 +100,7 @@ export default class Polyomino {
 
     addTo(grid, top, left) {
         this.#grid = grid;
-        this.#blocks.forEach(function(block) {
+        this.#blocks.forEach(function (block) {
             block.addTo(grid);
         });
         this.moveTo(top, left);
@@ -108,11 +119,11 @@ export default class Polyomino {
         let minLeft = Infinity,
             minTop = Infinity;
         if (!this.isHorizontal) this.rotate(true);
-        this.#blocks.forEach(function(block) {
+        this.#blocks.forEach(function (block) {
             if (block.top < minTop) minTop = block.top;
             if (block.left < minLeft) minLeft = block.left;
         });
-        this.#blocks.forEach(function(block) {
+        this.#blocks.forEach(function (block) {
             block.top = (block.top - minTop) + top;
             block.left = (block.left - minLeft) + left;
         });
@@ -150,34 +161,36 @@ export default class Polyomino {
         const piece = this;
         for (let i = 0; i < this.#blocks.length; ++i) {
             const pos = this.getRotatedPosition(this.#blocks[i]);
-            if (piece.#grid.isOffLimits(pos.top, pos.left)) { return false; }
+            if (piece.#grid.isOffLimits(pos.top, pos.left)) {
+                return false;
+            }
         }
         return true;
     }
 
     forceRight() {
-        this.#blocks.forEach(function(block) {
+        this.#blocks.forEach(function (block) {
             block.stepRight();
         });
         this.#grid.redraw();
     }
 
     forceLeft() {
-        this.#blocks.forEach(function(block) {
+        this.#blocks.forEach(function (block) {
             block.stepLeft();
         });
         this.#grid.redraw();
     }
 
     forceUp() {
-        this.#blocks.forEach(function(block) {
+        this.#blocks.forEach(function (block) {
             block.stepUp();
         });
         this.#grid.redraw();
     }
 
     forceDown() {
-        this.#blocks.forEach(function(block) {
+        this.#blocks.forEach(function (block) {
             block.stepDown();
         });
         this.#grid.redraw();
@@ -185,7 +198,7 @@ export default class Polyomino {
 
     unlock() {
         const grid = this.#grid;
-        this.#blocks.forEach(function(block) {
+        this.#blocks.forEach(function (block) {
             grid.unlockBlock(block);
         });
         this.#isLocked = false;
@@ -193,7 +206,7 @@ export default class Polyomino {
 
     lock() {
         const grid = this.#grid;
-        this.#blocks.forEach(function(block) {
+        this.#blocks.forEach(function (block) {
             grid.lockBlock(block);
         });
         this.#isLocked = true;
@@ -238,7 +251,7 @@ export default class Polyomino {
 
     rotate(force = false) {
         if (this.mayRotate() || force === true) {
-            for(let i = 0; i < this.#blocks.length; i++) {
+            for (let i = 0; i < this.#blocks.length; i++) {
                 this.forceRotate(this.#blocks[i])
             }
             this.#isHorizontal = !this.#isHorizontal;

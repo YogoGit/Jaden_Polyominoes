@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header(~{::title},~{},~{})}">
+    <title>Polyominoes - Help</title>
+</head>
+<body th:replace="~{fragments/body :: body(~{::table})}">
+<table class="table table-borderless table-striped table-light mt-3">
+    <!-- KEY / FUNCTION -->
+    <tbody>
+    <tr>
+        <th class="c1">Key</th>
+        <th class="c2">Function</th>
+    </tr>
+    <tr>
+        <td class="c1"><i>any key</i></td>
+        <td class="c2">Resume if paused or start if not started.</td>
+    </tr>
+    <tr>
+        <td class="c1">escape</td>
+        <td class="c2">Pause if not paused.</td>
+    </tr>
+    <tr>
+        <td class="c1">space bar</td>
+        <td class="c2">Drop and lock (hard drop).</td>
+    </tr>
+    <tr>
+        <td class="c1">down arrow</td>
+        <td class="c2">Step down (soft drop).</td>
+    </tr>
+    <tr>
+        <td class="c1">left arrow</td>
+        <td class="c2">Step left.</td>
+    </tr>
+    <tr>
+        <td class="c1">right arrow</td>
+        <td class="c2">Step right.</td>
+    </tr>
+    <tr>
+        <td class="c1">up arrow</td>
+        <td class="c2">Rotate clockwise 90 degrees.</td>
+    </tr>
+    <tr>
+        <td class="c1">lowercase z</td>
+        <td class="c2">Rotate counterclockwise 90 degrees.</td>
+    </tr>
+    <tr>
+        <td class="c1">lowercase h</td>
+        <td class="c2">Puts the active piece on hold;<br> If a piece was hold, then swaps current piece with on hold piece.<br>
+        </td>
+    </tr>
+    </tbody>
+</table>
+    <!-- EVENT / POINTS -->
+<table class="table table-borderless table-striped table-light mt-3">
+        <tbody>
+    <tr>
+        <th class="c1">Event</th>
+        <th class="c2">Points</th>
+    </tr>
+    <tr>
+        <td class="c1">soft drop</td>
+        <td class="c2">1 × level number</td>
+    </tr>
+    <tr>
+        <td class="c1">hard drop</td>
+        <td class="c2">2 × level number × distance dropped</td>
+    </tr>
+    <tr>
+        <td class="c1">clear 1 row</td>
+        <td class="c2">100</td>
+    </tr>
+    <tr>
+        <td class="c1">clear 2 rows</td>
+        <td class="c2">300</td>
+    </tr>
+    <tr>
+        <td class="c1">clear 3 rows</td>
+        <td class="c2">500</td>
+    </tr>
+    <tr>
+        <td class="c1">clear 4 rows</td>
+        <td class="c2">800</td>
+    </tr>
+    <tr>
+        <td class="c1">clear 5 rows</td>
+        <td class="c2">1100</td>
+    </tr>
+    <tr>
+        <td class="c1">clear 6 rows</td>
+        <td class="c2">1300</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

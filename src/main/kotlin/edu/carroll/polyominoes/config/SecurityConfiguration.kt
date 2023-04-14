@@ -28,7 +28,7 @@ class SecurityConfiguration(private val userDetailsService: UserDetailsService) 
                 "/vendor/**",
                 "/api/leaderboard",
                 "/leaderboard",
-                "/how-to-play",
+                "/help",
                 "/login",
                 "/register"
         ).permitAll().requestMatchers("/account").fullyAuthenticated().anyRequest().authenticated().and().formLogin()

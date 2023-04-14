@@ -1,16 +1,9 @@
 package edu.carroll.polyominoes.service.leaderboard
 
-import edu.carroll.polyominoes.jpa.model.Account
-import edu.carroll.polyominoes.jpa.model.Leaderboard
 import edu.carroll.polyominoes.web.rest.ajax.DatatablesRequest
 import edu.carroll.polyominoes.web.rest.ajax.datatables.Column
-import edu.carroll.polyominoes.web.rest.ajax.datatables.DatatablesResponse
 import edu.carroll.polyominoes.web.rest.ajax.datatables.Order
-import edu.carroll.polyominoes.web.rest.ajax.datatables.leaderboard.LeaderboardRow
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest

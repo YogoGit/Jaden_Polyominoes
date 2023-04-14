@@ -1,4 +1,4 @@
-import polyominoes from "../json/pieces.json" assert { type: "json" };
+import polyominoes from "../json/pieces.json" assert {type: "json"};
 import Block from "./Block.js";
 import Polyomino from "./Polyomino.js";
 import Grid from "./Grid.js";
@@ -40,9 +40,9 @@ export default class PieceManager {
                 const numBlocks = Math.min(top.length, left.length);
                 const blocks = [];
                 for (let i = 0; i < numBlocks; i++) {
-                    blocks.push( new Block(top[i], left[i], color));
+                    blocks.push(new Block(top[i], left[i], color));
                 }
-                piecesList.push( new Polyomino(blocks, pivotIndex, minLevel));
+                piecesList.push(new Polyomino(blocks, pivotIndex, minLevel));
             });
         }
         return piecesList;
@@ -57,13 +57,13 @@ export default class PieceManager {
     fillBag() {
         const level = this.#game.level;
         const bagCapacity = level * this.getPieces().length;
-            while (this.#bagOfPieces.length < bagCapacity) {
-                const piece = this.getRandomPiece()
-                if(piece != undefined && piece.minLevel <= level) {
-                    this.#bagOfPieces.push(piece);
-                }
+        while (this.#bagOfPieces.length < bagCapacity) {
+            const piece = this.getRandomPiece()
+            if (piece != undefined && piece.minLevel <= level) {
+                this.#bagOfPieces.push(piece);
             }
-            this.#shuffle()
+        }
+        this.#shuffle()
     }
 
     #swap(i, j) {
@@ -106,7 +106,7 @@ export default class PieceManager {
     }
 
     getFromOnHold() {
-        if (this.#pieceOnHold=== undefined) return;
+        if (this.#pieceOnHold === undefined) return;
         this.#pieceOnHold.removeFrom();
         return this.#pieceOnHold;
     }
@@ -139,7 +139,7 @@ export default class PieceManager {
     }
 
     shiftQueuedPieces() {
-        this.#queuedPieces.forEach(function(piece) {
+        this.#queuedPieces.forEach(function (piece) {
             if (piece.isLocked) {
                 piece.unlock();
             }

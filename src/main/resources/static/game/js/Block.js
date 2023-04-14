@@ -72,7 +72,7 @@ export default class Block {
     }
 
     mayStepDown() {
-        return this.#top < this.#grid.blocksTall  - 1 &&
+        return this.#top < this.#grid.blocksTall - 1 &&
             !this.#grid.isOffLimits(
                 this.#top + 1,
                 this.#left,
@@ -132,10 +132,10 @@ export default class Block {
     }
 
     draw() {
-        if(this.#grid === undefined) return;
+        if (this.#grid === undefined) return;
         const ctx = this.#grid.context;
-        const x = this.#left*this.#width,
-              y = this.#top*this.#height;
+        const x = this.#left * this.#width,
+            y = this.#top * this.#height;
         ctx.fillStyle = this.#color;
         ctx.fillRect(x, y, this.#width, this.#height);
     }

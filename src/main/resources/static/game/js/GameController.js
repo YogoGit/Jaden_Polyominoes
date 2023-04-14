@@ -13,13 +13,6 @@ export default class GameController {
     #game;
     #controlFunctions;
     #controller;
-
-    constructor(game) {
-        this.#game = game;
-        this.#controlFunctions = this.#getControlFunctions();
-        document.addEventListener("keydown", e => this.onKeyDown(e), true);
-    }
-
     keyCodes = Object.freeze({
         ESCAPE: 27,
         SPACE_BAR: 32,
@@ -32,6 +25,12 @@ export default class GameController {
         R: 82
     });
 
+    constructor(game) {
+        this.#game = game;
+        this.#controlFunctions = this.#getControlFunctions();
+        document.addEventListener("keydown", e => this.onKeyDown(e), true);
+    }
+
     onKeyDown(event) {
         const key = this.parseFunctionName(event);
         this.press(key);
@@ -42,12 +41,12 @@ export default class GameController {
     press(key) {
         if (!this.#game.isReady()) return;
         console.log("press: " + key);
-        if(!this.#game.isStarted() && key != "pause")  {
+        if (!this.#game.isStarted() && key != "pause") {
             this.#game.resume();
             return;
         }
         const f = this.#controlFunctions[key];
-        if (typeof f === "function")  setTimeout(f.bind(this.#game), 5);
+        if (typeof f === "function") setTimeout(f.bind(this.#game), 5);
     }
 
     parseFunctionName(event) {
