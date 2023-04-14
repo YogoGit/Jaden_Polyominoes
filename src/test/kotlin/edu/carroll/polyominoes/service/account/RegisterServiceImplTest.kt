@@ -1,82 +1,46 @@
 package edu.carroll.polyominoes.service.account
 
-import edu.carroll.polyominoes.jpa.model.Account
-import edu.carroll.polyominoes.jpa.repo.account.RegisterRepository
-import edu.carroll.polyominoes.service.account.model.TestingAccount
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
+import jakarta.transaction.Transactional
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.security.crypto.bcrypt.BCrypt
-import org.springframework.test.context.event.annotation.AfterTestClass
-import kotlin.test.AfterTest
 
+@Transactional
 @SpringBootTest
-class RegisterServiceImplTest(
-        @Autowired private val registerServiceImpl: RegisterServiceImpl,
-        @Autowired private val registerRepo : RegisterRepository
+internal class RegisterServiceImplTest(
+        @Autowired private val registerServiceImpl: RegisterServiceImpl
 ) {
 
     companion object {
 
-        private val currentAccount = TestingAccount("testing.user", "test@carroll.edu", "testing123!")
+        private val testAccount0 = TestingAccount("testing.user", "test@carroll.edu", "testing123!") //existing
         private val testAccount1 = TestingAccount("testing.user1", "test1@carroll.edu", "testing456!")
         private val testAccount2 = TestingAccount("testing.user2", "test2@gmail.com", "testing7890!")
     }
 
+    class TestingAccount {
+        var username: String
+        var email: String
+        var rawPassword: String
 
-    @BeforeEach
-    fun beforeTest() {
-        assertNotNull(registerRepo, "registerRepo must be injected", )
-        assertNotNull(registerServiceImpl, "registerServiceImpl, must be injected")
-
-        // Ensure dummy record is in the DB
-        val users = registerRepo.findByUsernameIgnoreCase(currentAccount.username)
-        if (users.isEmpty()) {
-            val hashPassword = BCrypt.hashpw(currentAccount.rawPassword, BCrypt.gensalt())
-            registerRepo.save(Account(currentAccount.username, currentAccount.email, hashPassword))
+        constructor(username : String, email : String, rawPassword : String) {
+            this.username = username
+            this.email = email
+            this.rawPassword = rawPassword
         }
     }
 
-    @AfterEach
-    fun afterTest() {
-
-        // removing test accounts from DB
-        var users = registerRepo.findByUsernameIgnoreCase(testAccount1.username)
-        if (users.isNotEmpty()) {
-            registerRepo.deleteAll(users)
-        }
-
-        users = registerRepo.findByUsernameIgnoreCase(testAccount2.username)
-        if (users.isNotEmpty()) {
-            registerRepo.deleteAll(users)
-        }
-    }
-
-    @AfterTestClass
-    fun afterClass() {
-        var users = registerRepo.findByUsernameIgnoreCase(currentAccount.username)
-        if (users.isNotEmpty()) {
-            registerRepo.deleteAll(users)
-        }
-    }
 
     @Test
     fun createUserOneUserSuccessTest() {
         assertTrue(registerServiceImpl.createUser(testAccount1.username, testAccount1.email, testAccount1.rawPassword))
-
-        val users = registerRepo.findByUsernameIgnoreCase(testAccount1.username)
-        assertEquals(1, users.size)
-
-        val user = users[0]
-        assertEquals(user.username, testAccount1.username)
-        assertEquals(user.email, testAccount1.email)
-        assertTrue(BCrypt.checkpw(testAccount1.rawPassword, user.hashPassword))
+        assertTrue(registerServiceImpl.validateUsernameExist(testAccount1.username))
+        assertTrue(registerServiceImpl.validateEmailExist(testAccount1.email))
     }
+
 
     @Test
     fun createUserTwoUserSuccessTest() {
@@ -84,37 +48,25 @@ class RegisterServiceImplTest(
         assertTrue(registerServiceImpl.createUser(testAccount2.username, testAccount2.email, testAccount2.rawPassword))
 
         // testAccount1
-        val users1 = registerRepo.findByUsernameIgnoreCase(testAccount1.username)
-        assertEquals(1, users1.size)
-
-        val user1 = users1[0]
-        assertEquals(user1.username, testAccount1.username)
-        assertEquals(user1.email, testAccount1.email)
-        assertTrue(BCrypt.checkpw(testAccount1.rawPassword, user1.hashPassword))
+        assertTrue(registerServiceImpl.validateUsernameExist(testAccount1.username))
+        assertTrue(registerServiceImpl.validateEmailExist(testAccount1.email))
 
         // testAccount2
-        val users2 = registerRepo.findByUsernameIgnoreCase(testAccount1.username)
-        assertEquals(1, users2.size)
-
-        val user2 = users2[0]
-        assertEquals(user2.username, testAccount1.username)
-        assertEquals(user2.email, testAccount1.email)
-        assertTrue(BCrypt.checkpw(testAccount1.rawPassword, user2.hashPassword))
+        assertTrue(registerServiceImpl.validateUsernameExist(testAccount2.username))
+        assertTrue(registerServiceImpl.validateEmailExist(testAccount2.email))
     }
 
     @Test
     fun createUserUsernameExistsTest() {
-        assertFalse(registerServiceImpl.createUser(currentAccount.username, testAccount1.email, testAccount1.rawPassword))
+        assertTrue(registerServiceImpl.createUser(testAccount0.username, testAccount0.email, testAccount0.rawPassword))
+        assertFalse(registerServiceImpl.createUser(testAccount0.username, testAccount1.email, testAccount1.rawPassword))
     }
+
 
     @Test
     fun createUserEmailExistsTest() {
-        assertFalse(registerServiceImpl.createUser(testAccount1.username, currentAccount.email, testAccount1.rawPassword))
-    }
-
-    @Test
-    fun createUserUserExistsTest() {
-        assertFalse(registerServiceImpl.createUser(testAccount1.username, currentAccount.email, testAccount1.rawPassword))
+        assertTrue(registerServiceImpl.createUser(testAccount0.username, testAccount0.email, testAccount0.rawPassword))
+        assertFalse(registerServiceImpl.createUser(testAccount1.username, testAccount0.email, testAccount1.rawPassword))
     }
 
     @Test
@@ -126,9 +78,8 @@ class RegisterServiceImplTest(
     @Test
     fun createUserTwoUserDoubleCreationTest() {
         assertTrue(registerServiceImpl.createUser(testAccount1.username, testAccount1.email, testAccount1.rawPassword))
-        assertFalse(registerServiceImpl.createUser(testAccount1.username, testAccount1.email, testAccount1.rawPassword))
-
         assertTrue(registerServiceImpl.createUser(testAccount2.username, testAccount2.email, testAccount2.rawPassword))
+        assertFalse(registerServiceImpl.createUser(testAccount1.username, testAccount1.email, testAccount1.rawPassword))
         assertFalse(registerServiceImpl.createUser(testAccount2.username, testAccount2.email, testAccount2.rawPassword))
     }
 
@@ -185,75 +136,155 @@ class RegisterServiceImplTest(
     }
 
     @Test
-    fun validateUniqueUsernameOneSuccessTest() {
-        assertTrue(registerServiceImpl.validateUniqueUsername(testAccount1.username))
+    fun validateUsernameExistOneSuccessTest() {
+        assertFalse(registerServiceImpl.validateUsernameExist(testAccount1.username))
     }
 
     @Test
-    fun validateUniqueUsernameTwoSuccessTest() {
-        assertTrue(registerServiceImpl.validateUniqueUsername(testAccount1.username))
-        assertTrue(registerServiceImpl.validateUniqueUsername(testAccount2.username))
+    fun validateUsernameExistTwoSuccessTest() {
+        assertFalse(registerServiceImpl.validateUsernameExist(testAccount1.username))
+        assertFalse(registerServiceImpl.validateUsernameExist(testAccount2.username))
     }
 
     @Test
-    fun validateUniqueUsernameInvalidTest() {
-        assertFalse(registerServiceImpl.validateUniqueUsername(currentAccount.username))
+    fun validateUsernameExistDuplicateSuccessTest() {
+        assertFalse(registerServiceImpl.validateUsernameExist(testAccount1.username))
+        assertFalse(registerServiceImpl.validateUsernameExist(testAccount1.username))
     }
 
     @Test
-    fun validateUniqueUsernameEmptyTest() {
-        assertFalse(registerServiceImpl.validateUniqueUsername(""))
+    fun validateUsernameExistTwoDuplicateSuccessTest() {
+        assertFalse(registerServiceImpl.validateUsernameExist(testAccount1.username))
+        assertFalse(registerServiceImpl.validateUsernameExist(testAccount2.username))
+        assertFalse(registerServiceImpl.validateUsernameExist(testAccount1.username))
+        assertFalse(registerServiceImpl.validateUsernameExist(testAccount2.username))
     }
 
     @Test
-    fun validateUniqueUsernameBlankTest() {
-        assertFalse(registerServiceImpl.validateUniqueUsername("   "))
+    fun validateUsernameExistFailsAfterUsernameExistsTest() {
+        assertFalse(registerServiceImpl.validateUsernameExist(testAccount1.username))
+        assertTrue(registerServiceImpl.createUser(testAccount1.username, testAccount1.email, testAccount1.rawPassword))
+        assertTrue(registerServiceImpl.validateUsernameExist(testAccount1.username))
     }
 
     @Test
-    fun validateUniqueUsernameTabTest() {
-        assertFalse(registerServiceImpl.validateUniqueUsername("\t"))
+    fun validateUsernameExistFailsAfterUsernamesExistsTest() {
+        assertFalse(registerServiceImpl.validateUsernameExist(testAccount1.username))
+        assertFalse(registerServiceImpl.validateUsernameExist(testAccount2.username))
+        assertTrue(registerServiceImpl.createUser(testAccount1.username, testAccount1.email, testAccount1.rawPassword))
+        assertTrue(registerServiceImpl.createUser(testAccount2.username, testAccount2.email, testAccount2.rawPassword))
+        assertTrue(registerServiceImpl.validateUsernameExist(testAccount1.username))
+        assertTrue(registerServiceImpl.validateUsernameExist(testAccount2.username))
     }
 
     @Test
-    fun validateUniqueUsernameNewLineTest() {
-        assertFalse(registerServiceImpl.validateUniqueUsername("\n"))
+    fun validateUsernameExistInvalidTest() {
+        assertTrue(registerServiceImpl.createUser(testAccount1.username, testAccount1.email, testAccount1.rawPassword))
+        assertTrue(registerServiceImpl.validateUsernameExist(testAccount1.username))
     }
 
     @Test
-    fun validateUniqueEmailOneSuccessTest() {
-        assertTrue(registerServiceImpl.validateUniqueEmail(testAccount1.email))
+    fun validateUsernameExistTwoUsernamesInvalidTest() {
+        assertTrue(registerServiceImpl.createUser(testAccount1.username, testAccount1.email, testAccount1.rawPassword))
+        assertTrue(registerServiceImpl.createUser(testAccount2.username, testAccount2.email, testAccount2.rawPassword))
+        assertTrue(registerServiceImpl.validateUsernameExist(testAccount1.username))
+        assertTrue(registerServiceImpl.validateUsernameExist(testAccount2.username))
     }
 
     @Test
-    fun validateUniqueEmailTwoSuccessTest() {
-        assertTrue(registerServiceImpl.validateUniqueEmail(testAccount1.email))
-        assertTrue(registerServiceImpl.validateUniqueEmail(testAccount2.email))
+    fun validateUsernameExistEmptyTest() {
+        assertFalse(registerServiceImpl.validateUsernameExist(""))
     }
 
     @Test
-    fun validateUniqueEmailInvalidTest() {
-        assertFalse(registerServiceImpl.validateUniqueEmail(currentAccount.email))
+    fun validateUsernameExistBlankTest() {
+        assertFalse(registerServiceImpl.validateUsernameExist("   "))
     }
 
     @Test
-    fun validateUniqueEmailEmptyTest() {
-        assertFalse(registerServiceImpl.validateUniqueEmail(""))
+    fun validateUsernameExistTabTest() {
+        assertFalse(registerServiceImpl.validateUsernameExist("\t"))
     }
 
     @Test
-    fun validateUniqueEmailBlankTest() {
-        assertFalse(registerServiceImpl.validateUniqueEmail("   "))
+    fun validateUsernameExistUsernameNewLineTest() {
+        assertFalse(registerServiceImpl.validateUsernameExist("\n"))
     }
 
     @Test
-    fun validateUniqueEmailTabTest() {
-        assertFalse(registerServiceImpl.validateUniqueEmail("\t"))
+    fun validateEmailExistEmailOneSuccessTest() {
+        assertFalse(registerServiceImpl.validateEmailExist(testAccount1.email))
     }
 
     @Test
-    fun validateUniqueEmailNewLineTest() {
-        assertFalse(registerServiceImpl.validateUniqueEmail("\n"))
+    fun validateEmailExistTwoSuccessTest() {
+        assertFalse(registerServiceImpl.validateEmailExist(testAccount1.email))
+        assertFalse(registerServiceImpl.validateEmailExist(testAccount2.email))
+    }
+
+    @Test
+    fun validateEmailExistDuplicateSuccessTest() {
+        assertFalse(registerServiceImpl.validateEmailExist(testAccount1.email))
+        assertFalse(registerServiceImpl.validateEmailExist(testAccount1.email))
+    }
+
+    @Test
+    fun validateEmailExistTwoDuplicateSuccessTest() {
+        assertFalse(registerServiceImpl.validateEmailExist(testAccount1.email))
+        assertFalse(registerServiceImpl.validateEmailExist(testAccount2.email))
+        assertFalse(registerServiceImpl.validateEmailExist(testAccount1.email))
+        assertFalse(registerServiceImpl.validateEmailExist(testAccount2.email))
+    }
+
+    @Test
+    fun validateEmailExistFailsAfterUsernameExistsTest() {
+        assertFalse(registerServiceImpl.validateEmailExist(testAccount1.email))
+        assertTrue(registerServiceImpl.createUser(testAccount1.username, testAccount1.email, testAccount1.rawPassword))
+        assertTrue(registerServiceImpl.validateEmailExist(testAccount1.email))
+    }
+
+    @Test
+    fun validateEmailExistFailsAfterEmailsExistsTest() {
+        assertFalse(registerServiceImpl.validateEmailExist(testAccount1.email))
+        assertFalse(registerServiceImpl.validateEmailExist(testAccount2.email))
+        assertTrue(registerServiceImpl.createUser(testAccount1.username, testAccount1.email, testAccount1.rawPassword))
+        assertTrue(registerServiceImpl.createUser(testAccount2.username, testAccount2.email, testAccount2.rawPassword))
+        assertTrue(registerServiceImpl.validateEmailExist(testAccount1.email))
+        assertTrue(registerServiceImpl.validateEmailExist(testAccount2.email))
+    }
+
+    @Test
+    fun validateEmailExistInvalidTest() {
+        assertTrue(registerServiceImpl.createUser(testAccount1.username, testAccount1.email, testAccount1.rawPassword))
+        assertTrue(registerServiceImpl.validateEmailExist(testAccount1.email))
+    }
+
+    @Test
+    fun validateEmailExistTwoEmailsInvalidTest() {
+        assertTrue(registerServiceImpl.createUser(testAccount1.username, testAccount1.email, testAccount1.rawPassword))
+        assertTrue(registerServiceImpl.createUser(testAccount2.username, testAccount2.email, testAccount2.rawPassword))
+        assertTrue(registerServiceImpl.validateEmailExist(testAccount1.email))
+        assertTrue(registerServiceImpl.validateEmailExist(testAccount2.email))
+    }
+
+    @Test
+    fun validateEmailExistEmptyTest() {
+        assertFalse(registerServiceImpl.validateEmailExist(""))
+    }
+
+    @Test
+    fun validateEmailExistBlankTest() {
+        assertFalse(registerServiceImpl.validateEmailExist("   "))
+    }
+
+    @Test
+    fun validateEmailExistTabTest() {
+        assertFalse(registerServiceImpl.validateEmailExist("\t"))
+    }
+
+    @Test
+    fun validateEmailExistNewLineTest() {
+        assertFalse(registerServiceImpl.validateEmailExist("\n"))
     }
 
 }

@@ -11,6 +11,9 @@ class RegisterServiceImpl(private val accountRepo: AccountRepository) : Register
 
     companion object {
         private val log = LoggerFactory.getLogger(RegisterServiceImpl::class.java)
+        private val usernameRegex = "\"^[a-zA-Z0-9.]*\\\$\"".toRegex()
+        private val emailRegex = "^[a-zA-Z0-9_!#\$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+\$".toRegex()
+        private val passwordRegex = "^[a-zA-Z0-9!@#\$%^&*()_+={}\\[\\]|\\\\:;\"'<,>.?/-]*\$".toRegex()
     }
 
     /**
@@ -22,7 +25,7 @@ class RegisterServiceImpl(private val accountRepo: AccountRepository) : Register
     override fun validateUsernameExist(username: String): Boolean {
 
         if (username.isNullOrBlank()) {
-            log.warn("validateUsernameDoesNotExist: username '{}' was null or blank", username)
+            log.warn("validateUsernameExist: username '{}' was null or blank", username)
             return false
         }
 
@@ -32,15 +35,15 @@ class RegisterServiceImpl(private val accountRepo: AccountRepository) : Register
         // We expect 0 or 1, so if we get more than 1, bail out as this is an error we don't deal with properly.
         if (users.isNotEmpty()) {
             if (users.size > 1) {
-                log.warn("validateUsernameDoesNotExist: found {} users for '{}'", users.size, username)
+                log.warn("validateUsernameExist: found {} users for '{}'", users.size, username)
             } else {
-                log.debug("validateUsernameDoesNotExist: found 1 user for '{}'", username)
+                log.debug("validateUsernameExist: found 1 user for '{}'", username)
             }
-            return false
+            return true
         }
 
-        log.info("validateUsernameDoesNotExist: '{}' is available", username)
-        return true
+        log.info("validateUsernameExist: '{}' is available", username)
+        return false
     }
 
     /**
@@ -54,22 +57,22 @@ class RegisterServiceImpl(private val accountRepo: AccountRepository) : Register
         val emails = accountRepo.findByEmailIgnoreCase(email)
 
         if (email.isNullOrBlank()) {
-            log.warn("validateEmailDoesNotExist: email '{}' was null or blank", email)
+            log.warn("validateUniqueEmail: email '{}' was null or blank", email)
             return false
         }
 
         // We expect 0 or 1, so if we get more than 1, bail out as this is an error we don't deal with properly.
         if (emails.isNotEmpty()) {
             if (emails.size > 1) {
-                log.warn("validateEmailDoesNotExist: found {} emails for '{}'", emails.size, email)
+                log.warn("validateUniqueEmail found {} emails for '{}'", emails.size, email)
             } else {
-                log.debug("validateEmailDoesNotExist: found 1 email for '{}'", email)
+                log.debug("validateUniqueEmail: found 1 email for '{}'", email)
             }
-            return false
+            return true
         }
 
-        log.info("validateEmailDoesNotExist: '{}' is available", email)
-        return true
+        log.info("validateUniqueEmail: '{}' is available", email)
+        return false
     }
 
     /**
@@ -99,13 +102,28 @@ class RegisterServiceImpl(private val accountRepo: AccountRepository) : Register
             return false
         }
 
-        if (!validateUsernameExist(username)) {
+        if (validateUsernameExist(username)) {
             log.debug("createUser: username '{}' already exists", username)
             return false
         }
 
-        if (!validateEmailExist(email)) {
+        if (validateEmailExist(email)) {
             log.debug("createUser: email '{}' already exists", email)
+            return false
+        }
+
+        if (!usernameRegex.matches(username)) {
+            log.debug("createUser: username '{}' contained a character that was not the letter (a-z), numbers (0-9), or (.)", username)
+            return false
+        }
+
+        if(!emailRegex.matches(email)) {
+            log.debug("createUser: email '{}' did not match RFC 5322 standard email regex", email)
+            return false
+        }
+
+        if(!passwordRegex.matches(rawPassword)) {
+            log.debug("createUser: password '****' contained a character that was not the letters (a-z), numbers (0-9), or special characters (!@#\$%^&*()_+={}\\[\\]|\\\\:;\"'<,>.?/)")
             return false
         }
 

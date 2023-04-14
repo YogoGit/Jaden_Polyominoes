@@ -23,7 +23,7 @@ interface RegisterService {
      * Given a username, determine if the user's given username already exist in the database.
      *
      * @param username - An username representing a user's account
-     * @return true if the user's given username in the database, false otherwise
+     * @return false if the user's given username is not in the database, true otherwise
      */
     fun validateUsernameExist(username: String): Boolean
 

@@ -1,22 +1,82 @@
 package edu.carroll.polyominoes.service.leaderboard
 
-import org.junit.jupiter.api.AfterEach
+import edu.carroll.polyominoes.jpa.model.Account
+import edu.carroll.polyominoes.jpa.model.Leaderboard
+import edu.carroll.polyominoes.web.rest.ajax.DatatablesRequest
+import edu.carroll.polyominoes.web.rest.ajax.datatables.Column
+import edu.carroll.polyominoes.web.rest.ajax.datatables.DatatablesResponse
+import edu.carroll.polyominoes.web.rest.ajax.datatables.Order
+import edu.carroll.polyominoes.web.rest.ajax.datatables.leaderboard.LeaderboardRow
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
+import org.springframework.boot.test.context.SpringBootTest
 
+@SpringBootTest
 internal class LeaderboardServiceImplTest {
 
-    @BeforeEach
-    fun setUp() {
+    companion object {
+
+        private val emptyRequest = DatatablesRequest()
+
+        private val mockRequestASC = DatatablesRequest(
+                0, 1, 10, listOf(Order(2,"asc")), listOf(Column())
+        )
+        private val mockRequestDESC = DatatablesRequest(
+                0, 1, 10, listOf(Order(2,"desc")), listOf(Column())
+        )
     }
 
-    @AfterEach
-    fun tearDown() {
+
+    @Test
+    fun getLeaderboardSuccessTest() {
+
     }
 
     @Test
-    fun getLeaderboard() {
+    fun getLeaderboardRandomDrawSuccessTest() {
+
+    }
+
+    @Test
+    fun getLeaderboardRandomStartSuccessTest() {
+
+    }
+
+    @Test
+    fun getLeaderboardRandomLengthSuccessTest() {
+
+    }
+
+    @Test
+    fun getLeaderboardRandomOrderSuccessTest() {
+
+    }
+
+
+    @Test
+    fun getLeaderboardInvalidDrawSuccessTest() {
+
+    }
+
+    @Test
+    fun getLeaderboardInvalidStartSuccessTest() {
+
+    }
+
+    @Test
+    fun getLeaderboardInvalidLengthSuccessTest() {
+
+    }
+
+    @Test
+    fun getLeaderboardInvalidOrderSuccessTest() {
+
+    }
+
+    @Test
+    fun getLeaderboardEmptyRequestSuccessTest() {
+
     }
 }
