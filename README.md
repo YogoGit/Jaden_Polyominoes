@@ -25,7 +25,7 @@ To build the project I recommend using docker to launch the postgresql database.
 
 1. Install Docker
    * Instructions to install docker can be found here: https://docs.docker.com/get-docker/
-2. Once docker has been downloaded, open up the command line interface of your choice, type the following: "docker pull postgres"
+2. Once docker has been downloaded, open up the command line interface of your choice, type the following: `docker pull postgres`
 
 3. Execute the following command to set up your database container: </br>
 `docker run --name <container-name> -e POSTGRES_USER=polyominoes -e POSTGRES_PASSWORD=appPassword -e POSTGRES_DB=polyominoes -p 5432:5432 -d postgres`
