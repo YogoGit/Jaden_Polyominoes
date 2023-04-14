@@ -24,11 +24,13 @@ class SecurityConfiguration(private val userDetailsService: UserDetailsService) 
                 "/css/**",
                 "/js/**",
                 "/fonts/**",
-                "game/**",
-                "vendor/**",
+                "/game/**",
+                "/vendor/**",
                 "/api/leaderboard",
                 "/leaderboard",
-                "/how-to-play"
+                "/how-to-play",
+                "/login",
+                "/register"
         ).permitAll().requestMatchers("/account").fullyAuthenticated().anyRequest().authenticated().and().formLogin()
             .loginPage("/login").defaultSuccessUrl("/", false).permitAll().and().logout().logoutUrl("/logout")
             .logoutSuccessUrl("/login").and().userDetailsService(userDetailsService).build()

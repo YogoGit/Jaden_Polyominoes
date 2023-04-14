@@ -11,9 +11,6 @@ class RegisterServiceImpl(private val accountRepo: AccountRepository) : Register
 
     companion object {
         private val log = LoggerFactory.getLogger(RegisterServiceImpl::class.java)
-        private val usernameRegex = "\"^[a-zA-Z0-9.]*\\\$\"".toRegex()
-        private val emailRegex = "^[a-zA-Z0-9_!#\$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+\$".toRegex()
-        private val passwordRegex = "^[a-zA-Z0-9!@#\$%^&*()_+={}\\[\\]|\\\\:;\"'<,>.?/-]*\$".toRegex()
     }
 
     /**
@@ -109,21 +106,6 @@ class RegisterServiceImpl(private val accountRepo: AccountRepository) : Register
 
         if (validateEmailExist(email)) {
             log.debug("createUser: email '{}' already exists", email)
-            return false
-        }
-
-        if (!usernameRegex.matches(username)) {
-            log.debug("createUser: username '{}' contained a character that was not the letter (a-z), numbers (0-9), or (.)", username)
-            return false
-        }
-
-        if(!emailRegex.matches(email)) {
-            log.debug("createUser: email '{}' did not match RFC 5322 standard email regex", email)
-            return false
-        }
-
-        if(!passwordRegex.matches(rawPassword)) {
-            log.debug("createUser: password '****' contained a character that was not the letters (a-z), numbers (0-9), or special characters (!@#\$%^&*()_+={}\\[\\]|\\\\:;\"'<,>.?/)")
             return false
         }
 
