@@ -12,21 +12,20 @@ interface RegisterService {
     fun createUser(username: String, email: String, rawPassword: String): Boolean
 
     /**
-     * Given an email, determine if the user's given email does not already exist in the database.
+     * Given an email, determine if the user's given email already exist in the database.
      *
      * @param email - an email which represents the user account
-     * @return true if the user's given email is not in the database, false otherwise
+     * @return true if the user's given email is in the database, false otherwise
      */
-    fun validateUniqueEmail(email: String): Boolean
+    fun validateEmailExist(email: String): Boolean
 
     /**
-     * Given a username, determine if the user's given username does not already exist in the database.
+     * Given a username, determine if the user's given username already exist in the database.
      *
      * @param username - An username representing a user's account
-     * @return true if the user's given username is not in the database, false otherwise
+     * @return true if the user's given username in the database, false otherwise
      */
-    fun validateUniqueUsername(username: String): Boolean
-
+    fun validateUsernameExist(username: String): Boolean
 
 
 }

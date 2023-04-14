@@ -1,74 +1,74 @@
 package edu.carroll.polyominoes.service.account
 
 import edu.carroll.polyominoes.jpa.model.Account
-import edu.carroll.polyominoes.jpa.repo.account.RegisterRepository
+import edu.carroll.polyominoes.jpa.repo.AccountRepository
 import org.slf4j.LoggerFactory
 import org.springframework.security.crypto.bcrypt.BCrypt
 import org.springframework.stereotype.Service
 
 @Service
-class RegisterServiceImpl(private val registerRepo: RegisterRepository) : RegisterService {
+class RegisterServiceImpl(private val accountRepo: AccountRepository) : RegisterService {
 
     companion object {
         private val log = LoggerFactory.getLogger(RegisterServiceImpl::class.java)
     }
 
     /**
-     * Given a username, determine if the user's given username does not already exist in the database.
+     * Given a username, determine if the user's given username already exist in the database.
      *
      * @param username - An username representing a user's account
-     * @return true if the user's given username is not in the database, false otherwise
+     * @return true if the user's given username is in the database, false otherwise
      */
-    override fun validateUniqueUsername(username: String): Boolean {
+    override fun validateUsernameExist(username: String): Boolean {
 
         if (username.isNullOrBlank()) {
-            log.warn("validateUniqueUsername: username '{}' was null or blank", username)
+            log.warn("validateUsernameDoesNotExist: username '{}' was null or blank", username)
             return false
         }
 
-        log.info("validateUniqueUsername: Checking if '{}' is linked to an account", username)
-        val users = registerRepo.findByUsernameIgnoreCase(username)
+        log.info("validateUsernameDoesNotExist: Checking if '{}' is linked to an account", username)
+        val users = accountRepo.findByUsernameIgnoreCase(username)
 
         // We expect 0 or 1, so if we get more than 1, bail out as this is an error we don't deal with properly.
-        if (users.size != 0) {
+        if (users.isNotEmpty()) {
             if (users.size > 1) {
-                log.warn("validateUniqueUsername: found {} users for '{}'", users.size, username)
+                log.warn("validateUsernameDoesNotExist: found {} users for '{}'", users.size, username)
             } else {
-                log.debug("validateUniqueUsername: found 1 user for '{}'", username)
+                log.debug("validateUsernameDoesNotExist: found 1 user for '{}'", username)
             }
             return false
         }
 
-        log.info("validateUniqueUsername: '{}' is available", username)
+        log.info("validateUsernameDoesNotExist: '{}' is available", username)
         return true
     }
 
     /**
-     * Given an email, determine if the user's given email does not already exist in the database.
+     * Given an email, determine if the user's given email already exist in the database.
      *
      * @param email - an email which represents the user account
-     * @return true if the user's given email is not in the database, false otherwise
+     * @return true if the user's given email is in the database, false otherwise
      */
-    override fun validateUniqueEmail(email: String): Boolean {
+    override fun validateEmailExist(email: String): Boolean {
         log.info("validateUniqueEmail: Checking if '{}' is linked to an account", email)
-        val emails = registerRepo.findByEmailIgnoreCase(email)
+        val emails = accountRepo.findByEmailIgnoreCase(email)
 
         if (email.isNullOrBlank()) {
-            log.warn("validateUniqueEmail email '{}' was null or blank", email)
+            log.warn("validateEmailDoesNotExist: email '{}' was null or blank", email)
             return false
         }
 
         // We expect 0 or 1, so if we get more than 1, bail out as this is an error we don't deal with properly.
-        if (emails.size != 0) {
+        if (emails.isNotEmpty()) {
             if (emails.size > 1) {
-                log.warn("validateUniqueEmail: found {} emails for '{}'", emails.size, email)
+                log.warn("validateEmailDoesNotExist: found {} emails for '{}'", emails.size, email)
             } else {
-                log.debug("validateUniqueEmail: found 1 email for '{}'", email)
+                log.debug("validateEmailDoesNotExist: found 1 email for '{}'", email)
             }
             return false
         }
 
-        log.info("validateUniqueEmail: '{}' is available", email)
+        log.info("validateEmailDoesNotExist: '{}' is available", email)
         return true
     }
 
@@ -81,6 +81,8 @@ class RegisterServiceImpl(private val registerRepo: RegisterRepository) : Regist
      * @return true if an account was added to the database, false otherwise
      */
     override fun createUser(username: String, email: String, rawPassword: String): Boolean {
+
+        log.info("createUser: attempting to create user for '{}'", username);
 
         if (username.isNullOrBlank()) {
             log.warn("createUser: username was null or blank!")
@@ -97,19 +99,19 @@ class RegisterServiceImpl(private val registerRepo: RegisterRepository) : Regist
             return false
         }
 
-        if (!validateUniqueUsername(username)) {
-            log.warn("createUser: username '{}' already exists", username)
+        if (!validateUsernameExist(username)) {
+            log.debug("createUser: username '{}' already exists", username)
             return false
         }
 
-        if (!validateUniqueEmail(email)) {
-            log.warn("createUser: email '{}' already exists", email)
+        if (!validateEmailExist(email)) {
+            log.debug("createUser: email '{}' already exists", email)
             return false
         }
 
         val hashPassword = BCrypt.hashpw(rawPassword, BCrypt.gensalt())
         val user: Account = Account(username, email, hashPassword)
-        registerRepo.save(user)
+        accountRepo.save(user)
 
         log.info("createUser: Created an account for '{}'", username)
         return true

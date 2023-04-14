@@ -1,8 +1,8 @@
 package edu.carroll.polyominoes.service.leaderboard
 
 import edu.carroll.polyominoes.web.rest.ajax.DatatablesRequest
-import edu.carroll.polyominoes.web.rest.model.datatables.DatatablesResponse
-import edu.carroll.polyominoes.web.rest.model.datatables.leaderboard.LeaderboardRow
+import edu.carroll.polyominoes.web.rest.ajax.datatables.DatatablesResponse
+import edu.carroll.polyominoes.web.rest.ajax.datatables.leaderboard.LeaderboardRow
 
 /**
  * When given a request creates DatatablesResponse of Leaderboard rows that represents the information in the

@@ -2,8 +2,8 @@ package edu.carroll.polyominoes.service.leaderboard
 
 import edu.carroll.polyominoes.jpa.repo.LeaderboardRepo
 import edu.carroll.polyominoes.web.rest.ajax.DatatablesRequest
-import edu.carroll.polyominoes.web.rest.model.datatables.DatatablesResponse
-import edu.carroll.polyominoes.web.rest.model.datatables.leaderboard.LeaderboardRow
+import edu.carroll.polyominoes.web.rest.ajax.datatables.DatatablesResponse
+import edu.carroll.polyominoes.web.rest.ajax.datatables.leaderboard.LeaderboardRow
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
@@ -64,24 +64,27 @@ class LeaderboardServiceImpl(private val leaderboardRepo: LeaderboardRepo) : Lea
 
         if (order.column != null) {
             if (!(Column.values().size >= order.column!! || order.column!! > 0)) {
-                log.warn("getLeaderboard: Order column index is out of bounds order.column '{}' and Column.values '{}'", order.column, Column.values().size)
+                log.warn(
+                        "getLeaderboard: Order column index is out of bounds order.column '{}' and Column.values '{}'",
+                        order.column,
+                        Column.values().size
+                )
                 pageable = PageRequest.of(pageNum, pageSize)
             } else {
-                lateinit var sort : Sort
+                lateinit var sort: Sort
                 when (order.dir) {
                     "asc" -> {
-                        println(order.dir)
-                        sort = Sort.by(Sort.Direction.ASC ,Column.values()[order.column!!].toString())
+                        sort = Sort.by(Sort.Direction.ASC, Column.values()[order.column!!].toString())
                     }
                     "desc" -> {
-                        sort = Sort.by(Sort.Direction.DESC ,Column.values()[order.column!!].toString())
+                        sort = Sort.by(Sort.Direction.DESC, Column.values()[order.column!!].toString())
                     }
                     else -> {
                         log.warn(
                                 "getLeaderboard: '{}' is an invalid entry for Order direction defaulting to desc",
                                 order.dir
                         )
-                        sort = Sort.by(Sort.Direction.DESC ,Column.values()[order.column!!].toString())
+                        sort = Sort.by(Sort.Direction.DESC, Column.values()[order.column!!].toString())
                     }
                 }
                 pageable = PageRequest.of(pageNum, pageSize, sort)

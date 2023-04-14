@@ -1,6 +1,6 @@
 package edu.carroll.polyominoes.service.account
 
-import edu.carroll.polyominoes.jpa.repo.account.LoginRepository
+import edu.carroll.polyominoes.jpa.repo.AccountRepository
 import edu.carroll.polyominoes.service.account.model.SecurityAccount
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.userdetails.UserDetails
@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 
 @Service
-class UserDetailsServiceImpl(private val loginRepo: LoginRepository) : UserDetailsService {
+class UserDetailsServiceImpl(private val accountRepo: AccountRepository) : UserDetailsService {
     companion object {
         private val log = LoggerFactory.getLogger(UserDetailsServiceImpl::class.java)
     }
@@ -39,11 +39,11 @@ class UserDetailsServiceImpl(private val loginRepo: LoginRepository) : UserDetai
         val users = if (username.contains("@")) {
             log.debug("loadUserByUsername: username contained '@' looking up '{}' by email", username)
             // Always do the lookup in a case-insensitive manner (lower-casing the data).
-            loginRepo.findByEmailIgnoreCase(username)
+            accountRepo.findByEmailIgnoreCase(username)
         } else {
             log.debug("loadUserByUsername: username was not an email looking up '{}' by username", username)
             // Always do the lookup in a case-insensitive manner (lower-casing the data).
-            loginRepo.findByUsernameIgnoreCase(username)
+            accountRepo.findByUsernameIgnoreCase(username)
         }
 
         // We expect 0 or 1, so if we get more than 1, bail out as this is an error we don't deal with properly.
