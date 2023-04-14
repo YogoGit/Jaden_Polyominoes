@@ -3,7 +3,7 @@
 <body th:fragment="body(content)">
 <nav th:replace="~{fragments/navbar :: navbar}"/>
 <div class="wrapper mx-auto">
-    <div class="container-fluid">
+    <div class="container-fluid h-100">
         <div th:replace="${content}"/>
     </div>
 </div>

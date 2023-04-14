@@ -4,5 +4,13 @@
     background-image: none;
 }
 
+.bg-dark {
+    background: #1F1F1F;
+}
+
+.bg-secondary {
+    background: #8D909B;
+}
+
 
 

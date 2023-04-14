@@ -1,11 +1,14 @@
 <!DOCTYPE HTML>
 <html xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/header :: header(~{::title},~{},~{})}">
+<head th:replace="~{fragments/header :: header(~{::title},~{::link},~{::script})}">
     <title>Polyominoes</title>
+
+    <link rel="stylesheet" th:href="@{game/css/game.css}"/>
+    <script type="module" th:src="@{js/game.js}"></script>
+
+
 </head>
-<body th:replace="~{fragments/body :: body(~{})}" sec:authorize="!isAuthenticated()">
-</body>
-<body th:replace="~{fragments/body :: body(~{::form})}" sec:authorize="isAuthenticated()">
-    <form th:replace="~{fragments/forms/score-form :: score-form}"/>
+<body th:replace="~{fragments/body :: body(~{::div})}">
+    <div th:replace="~{fragments/game :: game}"/>
 </body>
 </html>

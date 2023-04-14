@@ -1,7 +1,16 @@
+body {
+    color: #fff;
+    background: #1F1F1F;
+    height: 100vh;
+}
 
 .wrapper {
-    margin-top: 5rem;
+    padding: 5rem 2rem;
+    background: #333333;
+    height: 100%;
 }
+
+
 
 @media (min-width: 576px) {
     .wrapper {
