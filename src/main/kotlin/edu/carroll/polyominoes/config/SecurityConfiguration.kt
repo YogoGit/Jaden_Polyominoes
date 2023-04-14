@@ -13,13 +13,23 @@ import org.springframework.security.web.SecurityFilterChain
 @Configuration
 @EnableWebSecurity
 class SecurityConfiguration(private val userDetailsService: UserDetailsService) {
+    companion object;
 
     @Bean
     @Throws(Exception::class)
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
 
-        return http.csrf().disable().authorizeHttpRequests().requestMatchers("/**").permitAll()
-            .requestMatchers("/account").authenticated().anyRequest().authenticated().and().formLogin()
+        return http.csrf().disable().authorizeHttpRequests().requestMatchers(
+                "/",
+                "/css/**",
+                "/js/**",
+                "/fonts/**",
+                "game/**",
+                "vendor/**",
+                "/api/leaderboard",
+                "/leaderboard",
+                "/how-to-play"
+        ).permitAll().requestMatchers("/account").fullyAuthenticated().anyRequest().authenticated().and().formLogin()
             .loginPage("/login").defaultSuccessUrl("/", false).permitAll().and().logout().logoutUrl("/logout")
             .logoutSuccessUrl("/login").and().userDetailsService(userDetailsService).build()
     }
