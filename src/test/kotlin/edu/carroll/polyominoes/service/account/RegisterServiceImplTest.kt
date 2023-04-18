@@ -20,7 +20,7 @@ internal class RegisterServiceImplTest(
         private val testAccount2 = TestingAccount("testing.user2", "test2@gmail.com", "testing7890!")
     }
 
-    class TestingAccount {
+    internal class TestingAccount {
         var username: String
         var email: String
         var rawPassword: String

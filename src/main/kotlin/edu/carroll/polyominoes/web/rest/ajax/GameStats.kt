@@ -4,6 +4,9 @@ import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
 import java.time.Duration
 
+/**
+ * Represent the statistics from the game send via ajax.
+ */
 class GameStats() {
 
     constructor(time: Double, level: Long, score: Long, rows: Long, pieces: Long) : this() {
@@ -34,8 +37,12 @@ class GameStats() {
     @field:Size(min = 0, max = 2147483647)
     var pieces: Long = 0
 
-    override fun toString(): String {
-        return "time: $time \n" + "level: $level \n" + "score: $score \n" + "rows: $rows \n" + "pieces: $pieces \n"
+    fun isEmpty(): Boolean {
+        return time.isZero &&
+                level == 0.toLong() &&
+                score == 0.toLong() &&
+                rows == 0.toLong() &&
+                pieces == 0.toLong()
     }
 
 }

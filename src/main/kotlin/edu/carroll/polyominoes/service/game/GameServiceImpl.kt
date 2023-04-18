@@ -34,6 +34,11 @@ class GameServiceImpl(private val leaderboardRepo: LeaderboardRepo, private val 
             return false
         }
 
+        if (stats.isEmpty()) {
+            log.debug("saveGameStats: stats is empty")
+            return false
+        }
+
         val leaderboardRecord = leaderboardRepo.findByAccount(user);
 
         if (leaderboardRecord.size > 1) {
@@ -118,6 +123,10 @@ class GameServiceImpl(private val leaderboardRepo: LeaderboardRepo, private val 
      * @return Returns an Account corresponding to the username; otherwise null;
      */
     private fun findUser(username: String): Account? {
+
+        if(username.isNullOrBlank()) {
+            log.debug("findUser: username '{}' was null or blank", username)
+        }
 
         log.debug("findUser: attempting to find user '{}'", username)
 
