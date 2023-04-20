@@ -1,0 +1,36 @@
+<head th:fragment="header(title,links,scripts)">
+
+    <meta content="Jaden Bathon 2023" name="author">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+
+    <title th:replace="${title}">Polyominoes</title>
+
+    <!-- Bootstrap 5.3 JS -->
+    <script crossorigin="anonymous" th:src="@{vendor/bootstrap/js/bootstrap.min.js}"></script>
+
+    <!-- Bootstrap 5.3 CSS -->
+    <link rel="stylesheet" th:href="@{vendor/bootstrap/css/bootstrap.min.css}"/>
+
+    <!-- Fontawesome 5.15 JS -->
+    <script crossorigin="anonymous" th:src="@{vendor/fontawesome/js/all.min.js}"></script>
+
+    <!-- Fontawesome 5.15 CSS -->
+    <link rel="stylesheet" th:href="@{vendor/fontawesome/css/all.min.css}"/>
+
+    <!-- JQuery 3.6.3 -->
+    <script crossorigin="anonymous" th:src="@{vendor/jquery/js/jquery.min.js}"></script>
+
+    <!-- Override Boostrap 5 CSS -->
+    <link rel="stylesheet" th:href="@{css/bootstrap-overrides.css}"/>
+
+    <!-- Site CSS -->
+    <link rel="stylesheet" th:href="@{css/styles.css}"/>
+
+    <!-- Additional Links -->
+    <th:block th:replace="${links}"/>
+
+    <!-- Additional Scripts -->
+    <th:block th:replace="${scripts}"/>
+
+</head>

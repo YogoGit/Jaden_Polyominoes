@@ -1,0 +1,47 @@
+body {
+    background: #1F1F1F;
+    height: 100vh;
+}
+
+@font-face {
+    font-family: 'Pixeloid Sans';
+    src: url('/fonts/PixeloidSans-Bold.woff2') format('woff2'),
+    url('/fonts/PixeloidSans-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Pixeloid Mono';
+    src: url('/fonts/PixeloidMono.woff2') format('woff2'),
+    url('/fonts/PixeloidMono.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Pixeloid Sans';
+    src: url('/fonts/PixeloidSans.woff2') format('woff2'),
+    url('/fonts/PixeloidSans.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+.tetris {
+    font-family: 'Pixeloid Sans';
+}
+
+.wrapper {
+    color: #fff;
+    padding: 5rem 2rem;
+    background: #333333;
+    height: 100%;
+}
+
+
+@media (min-width: 576px) {
+    .wrapper {
+        width: 70%;
+    }
+}

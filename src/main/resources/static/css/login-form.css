@@ -1,0 +1,35 @@
+
+.login-wrapper {
+    max-width: 375px;
+    min-height: 500px;
+    margin: 7rem auto;
+}
+
+.login-header {
+    color: #fff;
+    text-align: center;
+}
+
+.login-brand, .login-brand:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+.login-body {
+    padding: 2.5rem 2rem 2rem 2rem;
+    background-color: #fff;
+    border-radius: 1rem;
+    width: 100%
+}
+
+.login-body>.form-floating {
+    color: #000;
+}
+
+.login-footer,.login-footer>a, .login-footer>a:hover {
+    color: #D0D3D4;
+    text-align: center;
+    text-decoration: none;
+}
+
+
