@@ -1,0 +1,21 @@
+<form action="#" method="post" th:action="@{/login}" th:fragment="login-form">
+    <h3 class="text-center">Welcome</h3>
+    <p class="text-center">Log in to your account</p>
+    <div class="form-floating mb-3">
+        <input aria-describedby="username" autofocus="autofocus" class="form-control" id="username"
+               name="username"
+               placeholder="Username or Email" required type="text">
+        <label for="username">Username or Email</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input aria-describedby="password" class="form-control" id="password" name="password"
+               placeholder="Password"
+               required type="password">
+        <label for="password">Password</label>
+    </div>
+    <a class="d-inline-block mb-3" href="/reset-password">Forgot Password?</a>
+    <div class="mb-3 text-danger" th:if="${param.error != null}"><i class="fas fa-exclamation-circle"></i> Your login
+        details were not found
+    </div>
+    <button class="btn btn-primary w-100" type="submit">Submit</button>
+</form>

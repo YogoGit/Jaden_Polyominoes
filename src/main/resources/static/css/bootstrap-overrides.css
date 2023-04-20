@@ -1,0 +1,64 @@
+/* Remove Bootstrap invalid icon */
+/* SASS $enable-validation-icons: false; */
+.form-control.is-invalid {
+    background-image: none;
+}
+
+.bg-dark {
+    background: #1F1F1F;
+}
+
+.btn-primary {
+    background: #2980B9;
+    border: none;
+    box-shadow: none;
+}
+
+.btn-primary:hover, btn-primary:focus {
+    background: #2980B9;
+    border: none;
+    box-shadow: none;
+}
+
+
+.bg-secondary {
+    background: #8D909B;
+}
+
+.offcanvas-header {
+    background: #8D909B;
+}
+
+.offcanvas-body {
+    background: #333333;
+}
+
+.button-close, .button-close:hover {
+    color: white;
+    font-size: 1.5rem;
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+.navbar-brand, .navbar-brand:hover {
+    color: #fff;
+    font-size: 2rem;
+}
+
+.navbar-toggler {
+    color: #fff;
+}
+
+.nav-link {
+    color: #fff;
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    color: #D0D3D4;
+    text-decoration: none;
+}
+
+
+

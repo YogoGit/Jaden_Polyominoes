@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6" xmlns:th="http://www.thymeleaf.org">
+<nav class="navbar fixed-top bg-secondary" th:fragment="navbar">
+    <div class="container-fluid mx-md-5 px-md-5">
+        <button aria-controls="offcanvasNavbar" class="navbar-toggler" data-bs-target="#offcanvasNavbar"
+                data-bs-toggle="offcanvas"
+                type="button">
+            <i class="fas fa-bars"></i>
+        </button>
+        <a class="navbar-brand tetris justify-content-start" th:href="@{/}">Polyominoes</a>
+
+        <a class="nav-link justify-content-end" sec:authorize="!isAuthenticated()" th:href="@{/login}">
+            <span>
+            Log in
+            </span>
+        </a>
+
+        <div class="dropdown justify-content-end" sec:authorize="isAuthenticated()">
+            <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="accountMenu"><span
+                    sec:authentication="name">Account</span></a>
+            <ul aria-labelledby="accountMenu" class="dropdown-menu">
+               <!-- <li><a class="dropdown-item" href="/account"><i aria-hidden="true" class="fa fa-cog"></i> Settings</a></li> -->
+                <li><a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt"></i> Log out</a></li>
+            </ul>
+        </div>
+        <div th:replace="~{fragments/offcanvas :: offcanvas}"></div>
+    </div>
+</nav>
+</html>

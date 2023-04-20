@@ -1,0 +1,28 @@
+.game-left, .game-center, .game-right {
+    margin: 0rem .125rem;
+    float: left;
+}
+
+#grid {
+    border: 0.125rem solid #5F626D;
+}
+
+#game-stats {
+    width: 20%;
+}
+
+#game-stats > div {
+    width: 640px;
+}
+
+#game-stats > div > label {
+    display: inline-block;
+    width: 50%;
+    text-align: left;
+}
+
+#game-stats > div > span {
+    display: inline-block;
+    width: 50%;
+    text-align: right;
+}

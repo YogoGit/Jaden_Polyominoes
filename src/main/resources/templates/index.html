@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header(~{::title},~{::link},~{::script})}">
+    <title>Polyominoes</title>
+
+    <link rel="stylesheet" th:href="@{game/css/game.css}"/>
+    <script th:src="@{js/game.js}" type="module"></script>
+
+
+</head>
+<body th:replace="~{fragments/body :: body(~{::div})}">
+<div th:replace="~{fragments/game :: game}"/>
+</body>
+</html>

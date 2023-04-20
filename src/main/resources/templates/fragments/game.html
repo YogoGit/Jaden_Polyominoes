@@ -1,0 +1,24 @@
+<div class="container-fluid" th:fragment="game">
+    <div class="row text-center mt-0 mb-2"><span id="game-message"></span></div>
+    <div class="row">
+        <div class="col-12 d-flex justify-content-center" id="game">
+            <div class="game-left">
+                <canvas height="96px" id="on-hold" width="192px"></canvas>
+            </div>
+            <div class="game-center">
+                <canvas height="640px" id="grid" width="320px"></canvas>
+            </div>
+            <div class="game-right">
+                <canvas height="640px" id="queue" width="192px"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="row align-items-center mx-auto" id="game-stats">
+        <div><label>Time:</label><span id="time-value">0</span></div>
+        <div><label>Level:&emsp;</label><span id="level-value">0</span></div>
+        <div><label>Score:&emsp;</label><span id="score-value">0</span></div>
+        <div><label>Rows:&emsp;</label><span id="rows-value">0</span></div>
+        <div><label>Pieces:&emsp;</label><span id="pieces-value">0</span></div>
+    </div>
+</div>
+
